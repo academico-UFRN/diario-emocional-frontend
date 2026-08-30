@@ -8,7 +8,9 @@ export const Route = createRootRoute({
 				<Link to="/" className="[&.active]:font-bold">
 					Início
 				</Link>
-				<Link to="/feelings">Sentimentos</Link>
+				<Link to="/feelings" className="[&.active]:font-bold">
+					Sentimentos
+				</Link>
 			</nav>
 			<main className="p-4">
 				<Outlet />
