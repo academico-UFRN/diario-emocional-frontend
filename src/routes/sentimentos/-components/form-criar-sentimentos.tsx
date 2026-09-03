@@ -14,19 +14,19 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { SENTIMENTOS } from "../-data-emotion";
-import type { CreateFeelingData } from "./form";
+import { SENTIMENTOS } from "../-data/-data-emotion";
+import type { FormEmotionValues } from "./form";
 
 export const EspecificFeelingsComponent = (
-	form: UseFormReturn<CreateFeelingData>,
+	form: UseFormReturn<FormEmotionValues>,
 ) => {
 	return (
 		<FieldGroup>
 			<Controller
-				name="especificFeelings"
+				name="sentimentos"
 				control={form.control}
 				render={({ field }) => (
-					<Field data-invalid={form.formState.errors.especificFeelings}>
+					<Field data-invalid={form.formState.errors.sentimentos}>
 						<FieldLabel htmlFor="especificFeelings">
 							Selecione os sentimentos específicos que você está sentindo hoje:
 							*
@@ -34,17 +34,17 @@ export const EspecificFeelingsComponent = (
 						<ToggleGroup
 							multiple
 							variant="outline"
-							value={field.value?.map((item) => String(item.id)) ?? []}
+							value={field.value?.map((item) => String(item.sentimento)) ?? []}
 							onValueChange={(values) => {
 								const selectedFeelings = values.map((value) => {
 									const id = value;
 									const selectedFeeling = field.value?.find(
-										(item) => item.id === id,
+										(item) => item.sentimento === id,
 									);
 
 									return {
-										id,
-										intensity: selectedFeeling?.intensity ?? 1,
+										sentimento: id,
+										intensidade: selectedFeeling?.intensidade ?? 1,
 									};
 								});
 
@@ -54,7 +54,7 @@ export const EspecificFeelingsComponent = (
 						>
 							{SENTIMENTOS.map((item) => {
 								const selectedFeeling = field.value?.find(
-									(value) => value.id === item.id,
+									(value) => value.sentimento === item.id,
 								);
 								const isSelected = !!selectedFeeling;
 
@@ -84,12 +84,12 @@ export const EspecificFeelingsComponent = (
 										{isSelected && (
 											<Select
 												id={`intensity-${item.id}`}
-												value={String(selectedFeeling.intensity)}
+												value={String(selectedFeeling.intensidade)}
 												onValueChange={(value) => {
 													const updatedFeelings = (field.value ?? []).map(
 														(current) =>
-															current.id === item.id
-																? { ...current, intensity: Number(value) }
+															current.sentimento === item.id
+																? { ...current, intensidade: Number(value) }
 																: current,
 													);
 
@@ -105,7 +105,7 @@ export const EspecificFeelingsComponent = (
 																"Ás vezes",
 																"Constantemente",
 																"O tempo todo",
-															][selectedFeeling.intensity - 1]
+															][selectedFeeling.intensidade - 1]
 														}
 													</SelectValue>
 												</SelectTrigger>
@@ -123,7 +123,7 @@ export const EspecificFeelingsComponent = (
 							})}
 						</ToggleGroup>
 						<FieldError>
-							{form.formState.errors.especificFeelings?.message}
+							{form.formState.errors.sentimentos?.message}
 						</FieldError>
 					</Field>
 				)}

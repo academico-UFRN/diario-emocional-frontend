@@ -4,6 +4,8 @@ import {
 	BriefcaseIcon,
 	ConfusedIcon,
 	DollarIcon,
+	Dumbbell01Icon,
+	Exercise,
 	FireIcon,
 	Happy01Icon,
 	HealtcareIcon,
@@ -243,6 +245,11 @@ export const GATILHOS = [
 		id: "LAZER",
 		name: "Lazer",
 		icon: SunIcon,
+	},
+	{
+		id: "EXERCICIO_FISICO",
+		name: "Exercício Físico",
+		icon: Dumbbell01Icon,
 	},
 	{
 		id: "OUTROS",

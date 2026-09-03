@@ -1,43 +1,38 @@
 import { Delete, Edit } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ListarAvaliacoesSentimento } from "@/api/avaliacao-sentimento/avalicao-sentimento.service";
-import { Heading } from "@/components/others/typography";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Card,
-	CardAction,
 	CardContent,
 	CardDescription,
 	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { FREQUENCY_LABELS, GATILHOS, SENTIMENTOS } from "./novo/-data-emotion";
+import {
+	FREQUENCY_LABELS,
+	GATILHOS,
+	SENTIMENTOS,
+} from "../-data/-data-emotion";
+import { CardSkeleton } from "./skeleton-card";
 
-export const Route = createFileRoute("/feelings/")({
-	component: RouteComponent,
-});
-
-function RouteComponent() {
-	const { data } = useQuery({
+export const TableAvaliation = () => {
+	const { data, isPending } = useQuery({
 		queryKey: ["feelings"],
 		queryFn: () => ListarAvaliacoesSentimento(1),
+		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 
+	if (isPending) {
+		return <CardSkeleton />;
+	}
+
 	return (
-		<main className="flex flex-col gap-8 p-4 max-w-270 mx-auto">
-			<header className="flex flex-col gap-4">
-				<Heading as="h1" variant="h1">
-					Avaliação de Sentimentos
-				</Heading>
-				<p>
-					Aqui você pode editar, deletar e acompanhar seus sentimentos ao longo
-					do tempo.
-				</p>
-			</header>
+		<div className="flex flex-col gap-4">
 			{data?.map((avaliacao) => (
 				<Card key={`${avaliacao.usuario.id}-${avaliacao.dataRegistro}`}>
 					<CardHeader className="flex items-center gap-4">
@@ -107,7 +102,7 @@ function RouteComponent() {
 							})}
 						</div>
 						<div className="flex flex-wrap gap-2">
-							{avaliacao.gatilhos.map((gatilho) => {
+							{avaliacao.gatilhos?.map((gatilho) => {
 								const gatilhoData = GATILHOS.find(
 									(item) => item.id === gatilho,
 								);
@@ -129,10 +124,17 @@ function RouteComponent() {
 						<div className="h-px w-full bg-border rounded-full " />
 					</CardContent>
 					<CardFooter className="flex justify-end gap-2">
-						<Button variant="outline" className="">
+						<Link
+							className={`border! border-border! ${buttonVariants({
+								variant: "outline",
+								size: "lg",
+							})}`}
+							to={`/sentimentos/$dataRegistro/edit`}
+							params={{ dataRegistro: avaliacao.dataRegistro }}
+						>
 							<HugeiconsIcon icon={Edit} strokeWidth={2} />
 							Editar Avaliação
-						</Button>
+						</Link>
 						<Button variant="destructive" className="">
 							<HugeiconsIcon icon={Delete} strokeWidth={2} />
 							Deletar Avaliação
@@ -140,6 +142,6 @@ function RouteComponent() {
 					</CardFooter>
 				</Card>
 			))}
-		</main>
+		</div>
 	);
-}
+};

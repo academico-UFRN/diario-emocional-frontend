@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Heading } from "@/components/others/typography";
-import { FormEmotion } from "./-components/form";
+import { TableAvaliation } from "./-components/table-avaliation";
 
-export const Route = createFileRoute("/feelings/novo/")({
+export const Route = createFileRoute("/sentimentos/")({
 	component: RouteComponent,
 });
 
@@ -11,19 +11,15 @@ function RouteComponent() {
 		<main className="flex flex-col gap-8 p-4 max-w-270 mx-auto">
 			<header className="flex flex-col gap-4">
 				<Heading as="h1" variant="h1">
-					{new Date().toLocaleDateString("pt-BR", {
-						day: "2-digit",
-						month: "2-digit",
-						year: "numeric",
-					})}
+					Avaliação de Sentimentos
 				</Heading>
-
 				<p>
-					Preencha os campos abaixo para registrar uma nova avaliação de
-					sentimento.
+					Aqui você pode editar, deletar e acompanhar seus sentimentos ao longo
+					do tempo.
 				</p>
 			</header>
-			<FormEmotion />
+
+			<TableAvaliation />
 		</main>
 	);
 }

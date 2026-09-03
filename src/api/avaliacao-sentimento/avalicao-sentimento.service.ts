@@ -1,13 +1,18 @@
 import type { AxiosResponse } from "axios";
 import { api } from "../axios";
-import type { AvaliacaoSentimento, AvaliacaoSentimentoRequest } from "./schema";
+import type {
+	AvaliacaoSentimento,
+	AvaliacaoSentimentoCriar,
+	AvaliacaoSentimentoEditar,
+} from "./schema";
 
-export const CriarAvaliacaoSentimento = async (
-	novaAvaliacao: AvaliacaoSentimentoRequest,
-): Promise<AvaliacaoSentimento> => {
+export const CriarAvaliacaoSentimento = async ({
+	usuarioId,
+	...props
+}: AvaliacaoSentimentoCriar): Promise<AvaliacaoSentimento> => {
 	const response: AxiosResponse<AvaliacaoSentimento> = await api.post(
-		"/avaliar-sentimentos",
-		novaAvaliacao,
+		`/avaliar-sentimentos/${usuarioId}`,
+		props,
 	);
 
 	return response.data;
@@ -23,14 +28,14 @@ export const ListarAvaliacoesSentimento = async (
 	return response.data;
 };
 
-export const EditarAvaliacaoSentimento = async (
-	dataRegistro: string,
-	usuarioId: number,
-	editadaAvaliacao: AvaliacaoSentimentoRequest,
-): Promise<AvaliacaoSentimento> => {
+export const EditarAvaliacaoSentimento = async ({
+	usuarioId,
+	dataRegistro,
+	...props
+}: AvaliacaoSentimentoEditar): Promise<AvaliacaoSentimento> => {
 	const response: AxiosResponse<AvaliacaoSentimento> = await api.put(
 		`/avaliar-sentimentos/${usuarioId}/${dataRegistro}`,
-		editadaAvaliacao,
+		props,
 	);
 
 	return response.data;
