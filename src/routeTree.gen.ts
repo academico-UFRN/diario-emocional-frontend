@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeelingsIndexRouteImport } from './routes/feelings/index'
+import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
 import { Route as FeelingsNovoIndexRouteImport } from './routes/feelings/novo/index'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const FeelingsIndexRoute = FeelingsIndexRouteImport.update({
   path: '/feelings/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelatoDiaIndexRoute = RelatoDiaIndexRouteImport.update({
+  id: '/relatoDia/',
+  path: '/relatoDia/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeelingsNovoIndexRoute = FeelingsNovoIndexRouteImport.update({
   id: '/feelings/novo/',
   path: '/feelings/novo/',
@@ -32,30 +38,34 @@ const FeelingsNovoIndexRoute = FeelingsNovoIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/feelings/': typeof FeelingsIndexRoute
+  '/relatoDia/': typeof RelatoDiaIndexRoute
   '/feelings/novo/': typeof FeelingsNovoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/feelings': typeof FeelingsIndexRoute
+  '/relatoDia': typeof RelatoDiaIndexRoute
   '/feelings/novo': typeof FeelingsNovoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/feelings/': typeof FeelingsIndexRoute
+  '/relatoDia/': typeof RelatoDiaIndexRoute
   '/feelings/novo/': typeof FeelingsNovoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feelings/' | '/feelings/novo/'
+  fullPaths: '/' | '/feelings/' | '/relatoDia/' | '/feelings/novo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feelings' | '/feelings/novo'
-  id: '__root__' | '/' | '/feelings/' | '/feelings/novo/'
+  to: '/' | '/feelings' | '/relatoDia' | '/feelings/novo'
+  id: '__root__' | '/' | '/feelings/' | '/relatoDia/' | '/feelings/novo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FeelingsIndexRoute: typeof FeelingsIndexRoute
+  RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
   FeelingsNovoIndexRoute: typeof FeelingsNovoIndexRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeelingsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/relatoDia/': {
+      id: '/relatoDia/'
+      path: '/relatoDia'
+      fullPath: '/relatoDia/'
+      preLoaderRoute: typeof RelatoDiaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feelings/novo/': {
       id: '/feelings/novo/'
       path: '/feelings/novo'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeelingsIndexRoute: FeelingsIndexRoute,
+  RelatoDiaIndexRoute: RelatoDiaIndexRoute,
   FeelingsNovoIndexRoute: FeelingsNovoIndexRoute,
 }
 export const routeTree = rootRouteImport
