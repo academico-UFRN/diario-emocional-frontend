@@ -14,7 +14,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { especificFeelingsToChoose } from "../-data-emotion";
+import { SENTIMENTOS } from "../-data-emotion";
 import type { CreateFeelingData } from "./form";
 
 export const EspecificFeelingsComponent = (
@@ -52,7 +52,7 @@ export const EspecificFeelingsComponent = (
 							}}
 							className="flex-wrap justify-start gap-2"
 						>
-							{especificFeelingsToChoose.map((item) => {
+							{SENTIMENTOS.map((item) => {
 								const selectedFeeling = field.value?.find(
 									(value) => value.id === item.id,
 								);

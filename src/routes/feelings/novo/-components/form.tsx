@@ -12,7 +12,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { triggersToChoose } from "../-data-emotion";
+import { GATILHOS } from "../-data-emotion";
 import { CareComponent } from "./care";
 import { EspecificFeelingsComponent } from "./especificFeelings";
 
@@ -95,7 +95,7 @@ export const FormEmotion = () => {
 								value={field.value?.map(String) ?? []}
 								onValueChange={(values) => field.onChange(values.map(String))}
 							>
-								{triggersToChoose.map((item) => (
+								{GATILHOS.map((item) => (
 									<ToggleGroupItem
 										key={item.id}
 										value={item.id}
