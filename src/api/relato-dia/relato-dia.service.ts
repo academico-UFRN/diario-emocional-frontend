@@ -1,13 +1,29 @@
 import type { AxiosResponse } from "axios";
 import { api } from "../axios";
-import type { RelatoDiaSchema, RelatoDiaRequest, RelatoDia } from "./schema";
+import type {
+	RelatoDia,
+	RelatoDiaCriarRequest,
+	RelatoDiaEditarDto,
+} from "./schema";
 
 export const CriarRelatoDia = async (
-	novoRelato: typeof RelatoDiaRequest,
+	novoRelato: RelatoDiaCriarRequest,
+	usuarioId: number
 ): Promise<RelatoDia> => {
 	const response: AxiosResponse<RelatoDia> = await api.post(
-		"/relato/criar",
+		`/relato/criar/${usuarioId}`,
 		novoRelato,
+	);
+
+	return response.data;
+};
+
+export const BuscarRelatoDia = async (
+	dataRegistro: string,
+	usuarioId: number,
+): Promise<RelatoDia> => {
+	const response: AxiosResponse<RelatoDia> = await api.get(
+		`/relato/buscarEspecifico/${usuarioId}/${dataRegistro}`,
 	);
 
 	return response.data;
@@ -26,7 +42,7 @@ export const ListarRelatosDia = async (
 export const EditarRelatoDia = async (
 	dataRegistro: string,
 	usuarioId: number,
-	editadoRelato: typeof RelatoDiaRequest,
+	editadoRelato: RelatoDiaEditarDto,
 ): Promise<RelatoDia> => {
 	const response: AxiosResponse<RelatoDia> = await api.put(
 		`/relato/editar/${usuarioId}/${dataRegistro}`,
