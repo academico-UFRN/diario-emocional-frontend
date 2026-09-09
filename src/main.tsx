@@ -24,7 +24,7 @@ if (!rootElement) {
 
 ReactDOM.createRoot(rootElement).render(
 	<React.StrictMode>
-		<ThemeProvider defaultTheme="system">
+		<ThemeProvider defaultTheme="system" storageKey="diario-emocional-theme">
 			<QueryClientProvider client={queryClient}>
 				<RouterProvider router={router} />
 			</QueryClientProvider>

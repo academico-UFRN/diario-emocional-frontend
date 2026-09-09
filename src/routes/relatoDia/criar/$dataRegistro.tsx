@@ -1,4 +1,4 @@
-import { Heading } from '@/components/others/typography';
+import { Heading } from '@/components/-/typography';
 import { Button } from '@/components/ui/button';
 
 import {
@@ -24,13 +24,13 @@ export const Route = createFileRoute('/relatoDia/criar/$dataRegistro')({
 
 function RouteComponent() {
 
-    function formatarDataDoJava(dataString: string): string {
-  if (!dataString) return ''; 
+  function formatarDataDoJava(dataString: string): string {
+    if (!dataString) return '';
 
-  const [ano, mes, dia] = dataString.split('-');
+    const [ano, mes, dia] = dataString.split('-');
 
-  return `${dia}/${mes}/${ano}`;
-}
+    return `${dia}/${mes}/${ano}`;
+  }
 
 
   const { dataRegistro } = useParams({
@@ -54,15 +54,15 @@ function RouteComponent() {
   });
 
 
-function handleSubmit(dados: Omit<RelatoDiaCriarRequest, 'dataRegistro'>) {
-  console.log("Dados enviados:", dados);
-  mutation.mutate({
-    dataRegistro,
-    titulo: dados.titulo,
-    conteudoHtml: dados.conteudoHtml,
-    favorito: dados.favorito,
-  });
-}
+  function handleSubmit(dados: Omit<RelatoDiaCriarRequest, 'dataRegistro'>) {
+    console.log("Dados enviados:", dados);
+    mutation.mutate({
+      dataRegistro,
+      titulo: dados.titulo,
+      conteudoHtml: dados.conteudoHtml,
+      favorito: dados.favorito,
+    });
+  }
 
 
   function voltarParaRelatos() {
