@@ -1,49 +1,76 @@
-import type { AxiosResponse } from "axios";
 import { api } from "../axios";
 import type {
-	AvaliacaoSentimento,
-	AvaliacaoSentimentoCriar,
-	AvaliacaoSentimentoEditar,
+  AvaliacaoSentimento,
+  AvaliacaoSentimentoInput,
 } from "./schema";
 
-export const CriarAvaliacaoSentimento = async ({
-	usuarioId,
-	...props
-}: AvaliacaoSentimentoCriar): Promise<AvaliacaoSentimento> => {
-	const response: AxiosResponse<AvaliacaoSentimento> = await api.post(
-		`/avaliar-sentimentos/${usuarioId}`,
-		props,
-	);
+// Interfaces para os parâmetros das mutações
+export interface CriarAvaliacaoParams {
+  usuarioId: number;
+  dados: AvaliacaoSentimentoInput;
+}
 
-	return response.data;
+export interface EditarAvaliacaoParams {
+  usuarioId: number;
+  dataRegistro: string;
+  dados: AvaliacaoSentimentoInput;
+}
+
+export interface DeletarAvaliacaoParams {
+  usuarioId: number;
+  dataRegistro: string;
+}
+
+// POST /avaliar-sentimentos/{usuarioId}
+export const criarAvaliacaoSentimento = async ({
+  usuarioId,
+  dados,
+}: CriarAvaliacaoParams): Promise<AvaliacaoSentimento> => {
+  const { data } = await api.post<AvaliacaoSentimento>(
+    `/avaliar-sentimentos/${usuarioId}`,
+    dados
+  );
+  return data;
 };
 
-export const ListarAvaliacoesSentimento = async (
-	usuarioId: number,
+// GET /avaliar-sentimentos/{usuarioId}
+export const listarAvaliacoesSentimento = async (
+  usuarioId: number
 ): Promise<AvaliacaoSentimento[]> => {
-	const response: AxiosResponse<AvaliacaoSentimento[]> = await api.get(
-		`/avaliar-sentimentos/${usuarioId}`,
-	);
-
-	return response.data;
+  const { data } = await api.get<AvaliacaoSentimento[]>(
+    `/avaliar-sentimentos/${usuarioId}`
+  );
+  return data;
 };
 
-export const EditarAvaliacaoSentimento = async ({
-	usuarioId,
-	dataRegistro,
-	...props
-}: AvaliacaoSentimentoEditar): Promise<AvaliacaoSentimento> => {
-	const response: AxiosResponse<AvaliacaoSentimento> = await api.put(
-		`/avaliar-sentimentos/${usuarioId}/${dataRegistro}`,
-		props,
-	);
-
-	return response.data;
+// GET /avaliar-sentimentos/{usuarioId}/{dataRegistro}
+export const obterAvaliacaoSentimento = async (
+  usuarioId: number,
+  dataRegistro: string
+): Promise<AvaliacaoSentimento> => {
+  const { data } = await api.get<AvaliacaoSentimento>(
+    `/avaliar-sentimentos/${usuarioId}/${dataRegistro}`
+  );
+  return data;
 };
 
-export const DeletarAvaliacaoSentimento = async (
-	dataRegistro: string,
-	usuarioId: number,
-): Promise<void> => {
-	await api.delete(`/avaliar-sentimentos/${usuarioId}/${dataRegistro}`);
+// PUT /avaliar-sentimentos/{usuarioId}/{dataRegistro}
+export const editarAvaliacaoSentimento = async ({
+  usuarioId,
+  dataRegistro,
+  dados,
+}: EditarAvaliacaoParams): Promise<AvaliacaoSentimento> => {
+  const { data } = await api.put<AvaliacaoSentimento>(
+    `/avaliar-sentimentos/${usuarioId}/${dataRegistro}`,
+    dados
+  );
+  return data;
+};
+
+// DELETE /avaliar-sentimentos/{usuarioId}/{dataRegistro}
+export const deletarAvaliacaoSentimento = async ({
+  usuarioId,
+  dataRegistro,
+}: DeletarAvaliacaoParams): Promise<void> => {
+  await api.delete(`/avaliar-sentimentos/${usuarioId}/${dataRegistro}`);
 };

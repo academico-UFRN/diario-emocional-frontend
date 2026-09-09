@@ -15,11 +15,13 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { SENTIMENTOS } from "../-data/-data-emotion";
-import type { FormEmotionValues } from "./form";
+import type { AvaliacaoSentimentoInput } from "@/api/avaliacao-sentimento/schema";
 
-export const EspecificFeelingsComponent = (
-	form: UseFormReturn<FormEmotionValues>,
-) => {
+interface EspecificFeelingsProps {
+	form: UseFormReturn<AvaliacaoSentimentoInput>;
+}
+
+export const EspecificFeelingsComponent = ({ form }: EspecificFeelingsProps) => {
 	return (
 		<FieldGroup>
 			<Controller
@@ -76,7 +78,7 @@ export const EspecificFeelingsComponent = (
 												<p>
 													{item.name
 														? item.name.charAt(0).toUpperCase() +
-															item.name.slice(1).toLowerCase()
+														item.name.slice(1).toLowerCase()
 														: ""}
 												</p>
 											</span>

@@ -1,8 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Controller, useForm } from "react-hook-form";
-import z from "zod";
-import { SentimentoSchema } from "@/api/avaliacao-sentimento/schema";
+import { AvaliacaoSentimentoInputSchema, type AvaliacaoSentimentoInput } from "@/api/avaliacao-sentimento/schema";
 import { Button } from "@/components/ui/button";
 import {
 	Field,
@@ -17,25 +16,13 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { GATILHOS } from "../-data/-data-emotion";
 import { EspecificFeelingsComponent } from "./form-criar-sentimentos";
 import { CareComponent } from "./slider-feeling-status";
-
-const formSchema = z.object({
-	avaliacaoDia: z
-		.number()
-		.min(1, "A avaliação do dia deve ser entre 1 e 5")
-		.max(5, "A avaliação do dia deve ser entre 1 e 5"),
-	sentimentos: z
-		.array(SentimentoSchema)
-		.min(1, "Selecione pelo menos um sentimento"),
-	gatilhos: z.array(z.string()).optional(),
-	textoLivre: z.string().optional(),
-});
-
-export type FormEmotionValues = z.infer<typeof formSchema>;
+import { CheckIcon } from "@hugeicons/core-free-icons";
 
 interface FormEmotionProps {
-	initialValues?: Partial<FormEmotionValues>;
-	onSubmit: (data: FormEmotionValues) => void;
+	initialValues?: Partial<AvaliacaoSentimentoInput>;
+	onSubmit: (data: AvaliacaoSentimentoInput) => void;
 	isPending?: boolean;
+	isSuccess?: boolean;
 	submitText?: string;
 }
 
@@ -43,10 +30,11 @@ export const FormEmotion = ({
 	initialValues,
 	onSubmit,
 	isPending,
+	isSuccess,
 	submitText = "Salvar",
 }: FormEmotionProps) => {
-	const form = useForm<FormEmotionValues>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<AvaliacaoSentimentoInput>({
+		resolver: zodResolver(AvaliacaoSentimentoInputSchema),
 		defaultValues: {
 			avaliacaoDia: 3,
 			sentimentos: [],
@@ -82,7 +70,9 @@ export const FormEmotion = ({
 					)}
 				/>
 			</FieldGroup>
-			{EspecificFeelingsComponent(form)}
+			<EspecificFeelingsComponent
+				form={form}
+			/>
 			<FieldGroup>
 				<Controller
 					name="gatilhos"
@@ -140,7 +130,10 @@ export const FormEmotion = ({
 					{isPending ? (
 						<>
 							<Spinner />
-							Salvando...
+						</>
+					) : isSuccess ? (
+						<>
+							<HugeiconsIcon icon={CheckIcon} strokeWidth={2} />
 						</>
 					) : (
 						submitText

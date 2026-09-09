@@ -11,8 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SentimentosIndexRouteImport } from './routes/sentimentos/index'
-import { Route as SentimentosCreateRouteImport } from './routes/sentimentos/create'
-import { Route as SentimentosDataRegistroEditRouteImport } from './routes/sentimentos/$dataRegistro.edit'
+import { Route as SentimentosCriarRouteImport } from './routes/sentimentos/criar'
+import { Route as SentimentosDataRegistroEditarRouteImport } from './routes/sentimentos/$dataRegistro.editar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -24,63 +24,63 @@ const SentimentosIndexRoute = SentimentosIndexRouteImport.update({
   path: '/sentimentos/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SentimentosCreateRoute = SentimentosCreateRouteImport.update({
-  id: '/sentimentos/create',
-  path: '/sentimentos/create',
+const SentimentosCriarRoute = SentimentosCriarRouteImport.update({
+  id: '/sentimentos/criar',
+  path: '/sentimentos/criar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SentimentosDataRegistroEditRoute =
-  SentimentosDataRegistroEditRouteImport.update({
-    id: '/sentimentos/$dataRegistro/edit',
-    path: '/sentimentos/$dataRegistro/edit',
+const SentimentosDataRegistroEditarRoute =
+  SentimentosDataRegistroEditarRouteImport.update({
+    id: '/sentimentos/$dataRegistro/editar',
+    path: '/sentimentos/$dataRegistro/editar',
     getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/sentimentos/create': typeof SentimentosCreateRoute
+  '/sentimentos/criar': typeof SentimentosCriarRoute
   '/sentimentos/': typeof SentimentosIndexRoute
-  '/sentimentos/$dataRegistro/edit': typeof SentimentosDataRegistroEditRoute
+  '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/sentimentos/create': typeof SentimentosCreateRoute
+  '/sentimentos/criar': typeof SentimentosCriarRoute
   '/sentimentos': typeof SentimentosIndexRoute
-  '/sentimentos/$dataRegistro/edit': typeof SentimentosDataRegistroEditRoute
+  '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/sentimentos/create': typeof SentimentosCreateRoute
+  '/sentimentos/criar': typeof SentimentosCriarRoute
   '/sentimentos/': typeof SentimentosIndexRoute
-  '/sentimentos/$dataRegistro/edit': typeof SentimentosDataRegistroEditRoute
+  '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/sentimentos/create'
+    | '/sentimentos/criar'
     | '/sentimentos/'
-    | '/sentimentos/$dataRegistro/edit'
+    | '/sentimentos/$dataRegistro/editar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/sentimentos/create'
+    | '/sentimentos/criar'
     | '/sentimentos'
-    | '/sentimentos/$dataRegistro/edit'
+    | '/sentimentos/$dataRegistro/editar'
   id:
     | '__root__'
     | '/'
-    | '/sentimentos/create'
+    | '/sentimentos/criar'
     | '/sentimentos/'
-    | '/sentimentos/$dataRegistro/edit'
+    | '/sentimentos/$dataRegistro/editar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SentimentosCreateRoute: typeof SentimentosCreateRoute
+  SentimentosCriarRoute: typeof SentimentosCriarRoute
   SentimentosIndexRoute: typeof SentimentosIndexRoute
-  SentimentosDataRegistroEditRoute: typeof SentimentosDataRegistroEditRoute
+  SentimentosDataRegistroEditarRoute: typeof SentimentosDataRegistroEditarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,18 +99,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SentimentosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sentimentos/create': {
-      id: '/sentimentos/create'
-      path: '/sentimentos/create'
-      fullPath: '/sentimentos/create'
-      preLoaderRoute: typeof SentimentosCreateRouteImport
+    '/sentimentos/criar': {
+      id: '/sentimentos/criar'
+      path: '/sentimentos/criar'
+      fullPath: '/sentimentos/criar'
+      preLoaderRoute: typeof SentimentosCriarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sentimentos/$dataRegistro/edit': {
-      id: '/sentimentos/$dataRegistro/edit'
-      path: '/sentimentos/$dataRegistro/edit'
-      fullPath: '/sentimentos/$dataRegistro/edit'
-      preLoaderRoute: typeof SentimentosDataRegistroEditRouteImport
+    '/sentimentos/$dataRegistro/editar': {
+      id: '/sentimentos/$dataRegistro/editar'
+      path: '/sentimentos/$dataRegistro/editar'
+      fullPath: '/sentimentos/$dataRegistro/editar'
+      preLoaderRoute: typeof SentimentosDataRegistroEditarRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -118,9 +118,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SentimentosCreateRoute: SentimentosCreateRoute,
+  SentimentosCriarRoute: SentimentosCriarRoute,
   SentimentosIndexRoute: SentimentosIndexRoute,
-  SentimentosDataRegistroEditRoute: SentimentosDataRegistroEditRoute,
+  SentimentosDataRegistroEditarRoute: SentimentosDataRegistroEditarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

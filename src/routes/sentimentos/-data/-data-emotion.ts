@@ -5,7 +5,6 @@ import {
 	ConfusedIcon,
 	DollarIcon,
 	Dumbbell01Icon,
-	Exercise,
 	FireIcon,
 	Happy01Icon,
 	HealtcareIcon,
