@@ -1,4 +1,4 @@
-import { differenceInCalendarDays, format, parse } from 'date-fns';
+import { differenceInCalendarDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 export function formatarDataFeed(dateString: string): string {
