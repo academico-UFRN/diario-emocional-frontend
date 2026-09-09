@@ -1,10 +1,10 @@
 import { Heading } from '@/components/-/typography';
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Delete, Edit } from "@hugeicons/core-free-icons";
+import { Edit } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { ListarRelatosDia } from '@/api/relato-dia/relato-dia.service';
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Heart as PhosphorHeart } from "@phosphor-icons/react";
 import { ExcluirRelato } from './-components/excluir-relato';

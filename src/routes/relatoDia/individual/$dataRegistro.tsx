@@ -6,7 +6,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute, useParams } from '@tanstack/react-router'
 import { Heart as PhosphorHeart } from "@phosphor-icons/react";
-import Markdown from 'react-markdown';
 import { ExcluirRelato } from '../-components/excluir-relato';
 
 

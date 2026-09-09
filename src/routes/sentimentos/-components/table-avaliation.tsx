@@ -21,8 +21,6 @@ import { CardSkeleton } from "./skeleton-card";
 import { DialogDestructive } from "@/components/-/dialog-destructive";
 import { queryClient } from "@/lib/react-query";
 import { deletarAvaliacaoSentimento, listarAvaliacoesSentimento } from "@/api/avaliacao-sentimento/avalicao-sentimento.service";
-import { formatDistanceToNow, format, parse } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { formatarDataFeed } from "@/lib/date-fns";
 
 export const TableAvaliation = () => {
