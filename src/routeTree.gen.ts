@@ -11,7 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeelingsIndexRouteImport } from './routes/feelings/index'
+import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
 import { Route as FeelingsNovoIndexRouteImport } from './routes/feelings/novo/index'
+import { Route as RelatoDiaCriarDataRegistroRouteImport } from './routes/relatoDia/criar/$dataRegistro'
+import { Route as RelatoDiaEditarDataRegistroRouteImport } from './routes/relatoDia/editar/$dataRegistro'
+import { Route as RelatoDiaIndividualDataRegistroRouteImport } from './routes/relatoDia/individual/$dataRegistro'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,39 +27,100 @@ const FeelingsIndexRoute = FeelingsIndexRouteImport.update({
   path: '/feelings/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelatoDiaIndexRoute = RelatoDiaIndexRouteImport.update({
+  id: '/relatoDia/',
+  path: '/relatoDia/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeelingsNovoIndexRoute = FeelingsNovoIndexRouteImport.update({
   id: '/feelings/novo/',
   path: '/feelings/novo/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelatoDiaCriarDataRegistroRoute =
+  RelatoDiaCriarDataRegistroRouteImport.update({
+    id: '/relatoDia/criar/$dataRegistro',
+    path: '/relatoDia/criar/$dataRegistro',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RelatoDiaEditarDataRegistroRoute =
+  RelatoDiaEditarDataRegistroRouteImport.update({
+    id: '/relatoDia/editar/$dataRegistro',
+    path: '/relatoDia/editar/$dataRegistro',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RelatoDiaIndividualDataRegistroRoute =
+  RelatoDiaIndividualDataRegistroRouteImport.update({
+    id: '/relatoDia/individual/$dataRegistro',
+    path: '/relatoDia/individual/$dataRegistro',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/feelings/': typeof FeelingsIndexRoute
+  '/relatoDia/': typeof RelatoDiaIndexRoute
+  '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
+  '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
+  '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
   '/feelings/novo/': typeof FeelingsNovoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/feelings': typeof FeelingsIndexRoute
+  '/relatoDia': typeof RelatoDiaIndexRoute
+  '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
+  '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
+  '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
   '/feelings/novo': typeof FeelingsNovoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/feelings/': typeof FeelingsIndexRoute
+  '/relatoDia/': typeof RelatoDiaIndexRoute
+  '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
+  '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
+  '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
   '/feelings/novo/': typeof FeelingsNovoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/feelings/' | '/feelings/novo/'
+  fullPaths:
+    | '/'
+    | '/feelings/'
+    | '/relatoDia/'
+    | '/relatoDia/criar/$dataRegistro'
+    | '/relatoDia/editar/$dataRegistro'
+    | '/relatoDia/individual/$dataRegistro'
+    | '/feelings/novo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/feelings' | '/feelings/novo'
-  id: '__root__' | '/' | '/feelings/' | '/feelings/novo/'
+  to:
+    | '/'
+    | '/feelings'
+    | '/relatoDia'
+    | '/relatoDia/criar/$dataRegistro'
+    | '/relatoDia/editar/$dataRegistro'
+    | '/relatoDia/individual/$dataRegistro'
+    | '/feelings/novo'
+  id:
+    | '__root__'
+    | '/'
+    | '/feelings/'
+    | '/relatoDia/'
+    | '/relatoDia/criar/$dataRegistro'
+    | '/relatoDia/editar/$dataRegistro'
+    | '/relatoDia/individual/$dataRegistro'
+    | '/feelings/novo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FeelingsIndexRoute: typeof FeelingsIndexRoute
+  RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
+  RelatoDiaCriarDataRegistroRoute: typeof RelatoDiaCriarDataRegistroRoute
+  RelatoDiaEditarDataRegistroRoute: typeof RelatoDiaEditarDataRegistroRoute
+  RelatoDiaIndividualDataRegistroRoute: typeof RelatoDiaIndividualDataRegistroRoute
   FeelingsNovoIndexRoute: typeof FeelingsNovoIndexRoute
 }
 
@@ -75,11 +140,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeelingsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/relatoDia/': {
+      id: '/relatoDia/'
+      path: '/relatoDia'
+      fullPath: '/relatoDia/'
+      preLoaderRoute: typeof RelatoDiaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feelings/novo/': {
       id: '/feelings/novo/'
       path: '/feelings/novo'
       fullPath: '/feelings/novo/'
       preLoaderRoute: typeof FeelingsNovoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatoDia/criar/$dataRegistro': {
+      id: '/relatoDia/criar/$dataRegistro'
+      path: '/relatoDia/criar/$dataRegistro'
+      fullPath: '/relatoDia/criar/$dataRegistro'
+      preLoaderRoute: typeof RelatoDiaCriarDataRegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatoDia/editar/$dataRegistro': {
+      id: '/relatoDia/editar/$dataRegistro'
+      path: '/relatoDia/editar/$dataRegistro'
+      fullPath: '/relatoDia/editar/$dataRegistro'
+      preLoaderRoute: typeof RelatoDiaEditarDataRegistroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatoDia/individual/$dataRegistro': {
+      id: '/relatoDia/individual/$dataRegistro'
+      path: '/relatoDia/individual/$dataRegistro'
+      fullPath: '/relatoDia/individual/$dataRegistro'
+      preLoaderRoute: typeof RelatoDiaIndividualDataRegistroRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,6 +181,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FeelingsIndexRoute: FeelingsIndexRoute,
+  RelatoDiaIndexRoute: RelatoDiaIndexRoute,
+  RelatoDiaCriarDataRegistroRoute: RelatoDiaCriarDataRegistroRoute,
+  RelatoDiaEditarDataRegistroRoute: RelatoDiaEditarDataRegistroRoute,
+  RelatoDiaIndividualDataRegistroRoute: RelatoDiaIndividualDataRegistroRoute,
   FeelingsNovoIndexRoute: FeelingsNovoIndexRoute,
 }
 export const routeTree = rootRouteImport
