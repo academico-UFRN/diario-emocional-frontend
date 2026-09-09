@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
+import { AvaliacaoSentimentoInputSchema, type AvaliacaoSentimentoInput } from "@/api/avaliacao-sentimento/schema";
 import { Button } from "@/components/ui/button";
 import {
 	Field,
@@ -10,46 +10,39 @@ import {
 	FieldLabel,
 } from "@/components/ui/field";
 import { Slider } from "@/components/ui/slider";
+import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { triggersToChoose } from "../-data-emotion";
-import { CareComponent } from "./care";
-import { EspecificFeelingsComponent } from "./especificFeelings";
+import { GATILHOS } from "../-data/-data-emotion";
+import { EspecificFeelingsComponent } from "./form-criar-sentimentos";
+import { CareComponent } from "./slider-feeling-status";
+import { CheckIcon } from "@hugeicons/core-free-icons";
 
-const feelingSchema = z.object({
-	feeling: z
-		.number()
-		.min(-5, "Bateria física deve ser entre -5 e 5.")
-		.max(5, "Bateria física deve ser entre -5 e 5."),
+interface FormEmotionProps {
+	initialValues?: Partial<AvaliacaoSentimentoInput>;
+	onSubmit: (data: AvaliacaoSentimentoInput) => void;
+	isPending?: boolean;
+	isSuccess?: boolean;
+	submitText?: string;
+}
 
-	especificFeelings: z
-		.object({
-			id: z.string(),
-			intensity: z.number().min(1).max(5),
-		})
-		.array()
-		.min(1, "Selecione pelo menos um sentimento específico."),
-
-	triggers: z.string().array().optional(),
-	freeText: z.string().optional(),
-});
-
-export type CreateFeelingData = z.infer<typeof feelingSchema>;
-
-export const FormEmotion = () => {
-	const form = useForm<CreateFeelingData>({
-		resolver: zodResolver(feelingSchema),
+export const FormEmotion = ({
+	initialValues,
+	onSubmit,
+	isPending,
+	isSuccess,
+	submitText = "Salvar",
+}: FormEmotionProps) => {
+	const form = useForm<AvaliacaoSentimentoInput>({
+		resolver: zodResolver(AvaliacaoSentimentoInputSchema),
 		defaultValues: {
-			feeling: 3,
-			especificFeelings: [],
-			triggers: [],
-			freeText: "",
+			avaliacaoDia: 3,
+			sentimentos: [],
+			gatilhos: [],
+			textoLivre: "",
+			...initialValues,
 		},
 	});
-
-	function onSubmit(data: CreateFeelingData) {
-		console.log("Form data:", data);
-	}
 
 	return (
 		<form
@@ -59,7 +52,7 @@ export const FormEmotion = () => {
 		>
 			<FieldGroup>
 				<Controller
-					name="feeling"
+					name="avaliacaoDia"
 					control={form.control}
 					render={({ field, fieldState }) => (
 						<Field data-invalid={fieldState.invalid}>
@@ -77,14 +70,16 @@ export const FormEmotion = () => {
 					)}
 				/>
 			</FieldGroup>
-			{EspecificFeelingsComponent(form)}
+			<EspecificFeelingsComponent
+				form={form}
+			/>
 			<FieldGroup>
 				<Controller
-					name="triggers"
+					name="gatilhos"
 					control={form.control}
 					render={({ field }) => (
-						<Field data-invalid={form.formState.errors.triggers}>
-							<FieldLabel htmlFor="triggers">
+						<Field data-invalid={form.formState.errors.gatilhos}>
+							<FieldLabel htmlFor="gatilhos">
 								Selecione os gatilhos que podem ter influenciado seus
 								sentimentos hoje:
 							</FieldLabel>
@@ -95,7 +90,7 @@ export const FormEmotion = () => {
 								value={field.value?.map(String) ?? []}
 								onValueChange={(values) => field.onChange(values.map(String))}
 							>
-								{triggersToChoose.map((item) => (
+								{GATILHOS.map((item) => (
 									<ToggleGroupItem
 										key={item.id}
 										value={item.id}
@@ -111,18 +106,18 @@ export const FormEmotion = () => {
 									</ToggleGroupItem>
 								))}
 							</ToggleGroup>
-							<FieldError>{form.formState.errors.triggers?.message}</FieldError>
+							<FieldError>{form.formState.errors.gatilhos?.message}</FieldError>
 						</Field>
 					)}
 				></Controller>
 			</FieldGroup>
 			<FieldGroup>
 				<Controller
-					name="freeText"
+					name="textoLivre"
 					control={form.control}
 					render={({ field }) => (
-						<Field data-invalid={form.formState.errors.freeText}>
-							<FieldLabel htmlFor="freeText">
+						<Field data-invalid={form.formState.errors.textoLivre}>
+							<FieldLabel htmlFor="textoLivre">
 								Quer compartilhar mais sobre seus sentimentos hoje?
 							</FieldLabel>
 							<Textarea {...field} />
@@ -131,7 +126,19 @@ export const FormEmotion = () => {
 				/>
 			</FieldGroup>
 			<div className="flex justify-end">
-				<Button type="submit">Salvar avalição</Button>
+				<Button type="submit" disabled={isPending}>
+					{isPending ? (
+						<>
+							<Spinner />
+						</>
+					) : isSuccess ? (
+						<>
+							<HugeiconsIcon icon={CheckIcon} strokeWidth={2} />
+						</>
+					) : (
+						submitText
+					)}
+				</Button>
 			</div>
 		</form>
 	);

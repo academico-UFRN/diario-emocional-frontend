@@ -4,6 +4,7 @@ import {
 	BriefcaseIcon,
 	ConfusedIcon,
 	DollarIcon,
+	Dumbbell01Icon,
 	FireIcon,
 	Happy01Icon,
 	HealtcareIcon,
@@ -27,7 +28,7 @@ import {
 	UsersIcon,
 } from "@hugeicons/core-free-icons";
 
-export const especificFeelingsToChoose = [
+export const SENTIMENTOS = [
 	// 🔴 Emoções Vermelhas (Raiva/Paixão)
 	{
 		id: "FURIOSO",
@@ -203,7 +204,7 @@ export const especificFeelingsToChoose = [
 	},
 ];
 
-export const triggersToChoose = [
+export const GATILHOS = [
 	{
 		id: "TRABALHO",
 		name: "Trabalho",
@@ -245,8 +246,21 @@ export const triggersToChoose = [
 		icon: SunIcon,
 	},
 	{
+		id: "EXERCICIO_FISICO",
+		name: "Exercício Físico",
+		icon: Dumbbell01Icon,
+	},
+	{
 		id: "OUTROS",
 		name: "Outros",
 		icon: ConfusedIcon,
 	},
+];
+
+export const FREQUENCY_LABELS = [
+	"Quase nunca",
+	"Pouco",
+	"Às vezes",
+	"Constantemente",
+	"O tempo todo",
 ];

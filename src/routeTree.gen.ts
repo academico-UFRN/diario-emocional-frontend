@@ -10,21 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as FeelingsIndexRouteImport } from './routes/feelings/index'
 import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
-import { Route as FeelingsNovoIndexRouteImport } from './routes/feelings/novo/index'
+import { Route as SentimentosIndexRouteImport } from './routes/sentimentos/index'
+import { Route as SentimentosCriarRouteImport } from './routes/sentimentos/criar'
 import { Route as RelatoDiaCriarDataRegistroRouteImport } from './routes/relatoDia/criar/$dataRegistro'
 import { Route as RelatoDiaEditarDataRegistroRouteImport } from './routes/relatoDia/editar/$dataRegistro'
 import { Route as RelatoDiaIndividualDataRegistroRouteImport } from './routes/relatoDia/individual/$dataRegistro'
+import { Route as SentimentosDataRegistroEditarRouteImport } from './routes/sentimentos/$dataRegistro.editar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeelingsIndexRoute = FeelingsIndexRouteImport.update({
-  id: '/feelings/',
-  path: '/feelings/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RelatoDiaIndexRoute = RelatoDiaIndexRouteImport.update({
@@ -32,9 +28,14 @@ const RelatoDiaIndexRoute = RelatoDiaIndexRouteImport.update({
   path: '/relatoDia/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FeelingsNovoIndexRoute = FeelingsNovoIndexRouteImport.update({
-  id: '/feelings/novo/',
-  path: '/feelings/novo/',
+const SentimentosIndexRoute = SentimentosIndexRouteImport.update({
+  id: '/sentimentos/',
+  path: '/sentimentos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SentimentosCriarRoute = SentimentosCriarRouteImport.update({
+  id: '/sentimentos/criar',
+  path: '/sentimentos/criar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RelatoDiaCriarDataRegistroRoute =
@@ -55,73 +56,86 @@ const RelatoDiaIndividualDataRegistroRoute =
     path: '/relatoDia/individual/$dataRegistro',
     getParentRoute: () => rootRouteImport,
   } as any)
+const SentimentosDataRegistroEditarRoute =
+  SentimentosDataRegistroEditarRouteImport.update({
+    id: '/sentimentos/$dataRegistro/editar',
+    path: '/sentimentos/$dataRegistro/editar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/feelings/': typeof FeelingsIndexRoute
+  '/sentimentos/criar': typeof SentimentosCriarRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
+  '/sentimentos/': typeof SentimentosIndexRoute
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
-  '/feelings/novo/': typeof FeelingsNovoIndexRoute
+  '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/feelings': typeof FeelingsIndexRoute
+  '/sentimentos/criar': typeof SentimentosCriarRoute
   '/relatoDia': typeof RelatoDiaIndexRoute
+  '/sentimentos': typeof SentimentosIndexRoute
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
-  '/feelings/novo': typeof FeelingsNovoIndexRoute
+  '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/feelings/': typeof FeelingsIndexRoute
+  '/sentimentos/criar': typeof SentimentosCriarRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
+  '/sentimentos/': typeof SentimentosIndexRoute
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
-  '/feelings/novo/': typeof FeelingsNovoIndexRoute
+  '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/feelings/'
+    | '/sentimentos/criar'
     | '/relatoDia/'
+    | '/sentimentos/'
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
-    | '/feelings/novo/'
+    | '/sentimentos/$dataRegistro/editar'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/feelings'
+    | '/sentimentos/criar'
     | '/relatoDia'
+    | '/sentimentos'
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
-    | '/feelings/novo'
+    | '/sentimentos/$dataRegistro/editar'
   id:
     | '__root__'
     | '/'
-    | '/feelings/'
+    | '/sentimentos/criar'
     | '/relatoDia/'
+    | '/sentimentos/'
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
-    | '/feelings/novo/'
+    | '/sentimentos/$dataRegistro/editar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FeelingsIndexRoute: typeof FeelingsIndexRoute
+  SentimentosCriarRoute: typeof SentimentosCriarRoute
   RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
+  SentimentosIndexRoute: typeof SentimentosIndexRoute
   RelatoDiaCriarDataRegistroRoute: typeof RelatoDiaCriarDataRegistroRoute
   RelatoDiaEditarDataRegistroRoute: typeof RelatoDiaEditarDataRegistroRoute
   RelatoDiaIndividualDataRegistroRoute: typeof RelatoDiaIndividualDataRegistroRoute
-  FeelingsNovoIndexRoute: typeof FeelingsNovoIndexRoute
+  SentimentosDataRegistroEditarRoute: typeof SentimentosDataRegistroEditarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -133,13 +147,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/feelings/': {
-      id: '/feelings/'
-      path: '/feelings'
-      fullPath: '/feelings/'
-      preLoaderRoute: typeof FeelingsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/relatoDia/': {
       id: '/relatoDia/'
       path: '/relatoDia'
@@ -147,11 +154,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelatoDiaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/feelings/novo/': {
-      id: '/feelings/novo/'
-      path: '/feelings/novo'
-      fullPath: '/feelings/novo/'
-      preLoaderRoute: typeof FeelingsNovoIndexRouteImport
+    '/sentimentos/': {
+      id: '/sentimentos/'
+      path: '/sentimentos'
+      fullPath: '/sentimentos/'
+      preLoaderRoute: typeof SentimentosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sentimentos/criar': {
+      id: '/sentimentos/criar'
+      path: '/sentimentos/criar'
+      fullPath: '/sentimentos/criar'
+      preLoaderRoute: typeof SentimentosCriarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/relatoDia/criar/$dataRegistro': {
@@ -175,17 +189,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelatoDiaIndividualDataRegistroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sentimentos/$dataRegistro/editar': {
+      id: '/sentimentos/$dataRegistro/editar'
+      path: '/sentimentos/$dataRegistro/editar'
+      fullPath: '/sentimentos/$dataRegistro/editar'
+      preLoaderRoute: typeof SentimentosDataRegistroEditarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FeelingsIndexRoute: FeelingsIndexRoute,
+  SentimentosCriarRoute: SentimentosCriarRoute,
   RelatoDiaIndexRoute: RelatoDiaIndexRoute,
+  SentimentosIndexRoute: SentimentosIndexRoute,
   RelatoDiaCriarDataRegistroRoute: RelatoDiaCriarDataRegistroRoute,
   RelatoDiaEditarDataRegistroRoute: RelatoDiaEditarDataRegistroRoute,
   RelatoDiaIndividualDataRegistroRoute: RelatoDiaIndividualDataRegistroRoute,
-  FeelingsNovoIndexRoute: FeelingsNovoIndexRoute,
+  SentimentosDataRegistroEditarRoute: SentimentosDataRegistroEditarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

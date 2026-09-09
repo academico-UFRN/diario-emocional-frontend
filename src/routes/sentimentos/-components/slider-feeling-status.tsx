@@ -13,7 +13,7 @@ export const CareComponent = ({ value }: CareComponentProps) => {
 					secondaryColor: "bg-red-600",
 					emoji: "😠",
 					label: "Muito Desagradável",
-					backgroundColor: "bg-red-50",
+					backgroundColor: "bg-red-500/10",
 					shapeStyle: {
 						borderRadius: "0%",
 					},
@@ -24,7 +24,7 @@ export const CareComponent = ({ value }: CareComponentProps) => {
 					color: "bg-orange-400",
 					emoji: "😒",
 					label: "Desagradável",
-					backgroundColor: "bg-orange-50",
+					backgroundColor: "bg-orange-500/10",
 					shapeStyle: {
 						borderRadius: "2%",
 					},
@@ -35,7 +35,7 @@ export const CareComponent = ({ value }: CareComponentProps) => {
 					secondaryColor: "bg-gray-600",
 					emoji: "😐",
 					label: "Neutro",
-					backgroundColor: "bg-gray-100",
+					backgroundColor: "bg-gray-500/10",
 					shapeStyle: {
 						borderRadius: "4%",
 					},
@@ -46,7 +46,7 @@ export const CareComponent = ({ value }: CareComponentProps) => {
 					secondaryColor: "bg-lime-600",
 					emoji: "🙂",
 					label: "Agradável",
-					backgroundColor: "bg-lime-50",
+					backgroundColor: "bg-lime-500/10",
 					shapeStyle: {
 						borderRadius: "6%",
 					},
@@ -57,7 +57,7 @@ export const CareComponent = ({ value }: CareComponentProps) => {
 					secondaryColor: "bg-green-600",
 					emoji: "😄",
 					label: "Muito Agradável",
-					backgroundColor: "bg-green-50",
+					backgroundColor: "bg-green-500/10",
 					shapeStyle: {
 						borderRadius: "8%",
 					},
@@ -150,8 +150,8 @@ export const CareComponent = ({ value }: CareComponentProps) => {
 
 			{/* Label */}
 			<div className="text-center">
-				<h3 className="text-2xl font-bold text-gray-800">{label}</h3>
-				<p className="text-gray-600">
+				<h3 className="text-2xl font-bold text-foreground">{label}</h3>
+				<p className="text-muted-foreground">
 					{value === 5
 						? "Dia sensacional! ✨"
 						: value === 4
