@@ -11,6 +11,9 @@ import { FormEmotion } from "./-components/form";
 import { FormSkeleton } from "./-components/skeleton-form";
 import { queryClient } from "@/lib/react-query";
 import type { AvaliacaoSentimentoInput } from "@/api/avaliacao-sentimento/schema";
+import { toast } from "@/components/ui/toast";
+import type { AxiosError } from "axios";
+import type { ErrorResponse } from "@/api/schemas";
 
 export const Route = createFileRoute("/sentimentos/$dataRegistro/editar")({
 	loader: ({ params }) => {
@@ -36,10 +39,22 @@ function RouteComponent() {
 		onSuccess: async () => {
 			useQueryClient.invalidateQueries({ queryKey: ["feelings"] });
 			useQueryClient.invalidateQueries({ queryKey: ["avalicao-sentimento"] });
+			toast.add({
+				title: "Sucesso",
+				description: "Avaliação editada com sucesso.",
+				type: "success",
+			});
 			await navigate({
 				to: "/sentimentos",
 			});
 		},
+		onError: (error: AxiosError<ErrorResponse>) => {
+			toast.add({
+				title: error.response?.data?.status && error.response?.data?.error ? `${error.response?.data?.status} - ${error.response?.data?.error}` : "Erro",
+				description: error.response?.data?.message || `Ocorreu um erro ao adicionar a avaliação: ${error}`,
+				type: "error",
+			});
+		}
 	});
 
 	const { data, isSuccess: isQuerySuccess, isPending: isQueryPending } = useQuery({

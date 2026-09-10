@@ -10,7 +10,7 @@ export const SentimentoSchema = z.object({
   intensidade: z.number().min(1).max(10, "A intensidade deve ser de 1 a 10"),
 });
 
-// Schema da Avaliação Completa (como o backend devolve no GET)
+// Schema da Avaliação Completa - AvaliacaoSentimentoResponse
 export const AvaliacaoSentimentoSchema = z.object({
   dataRegistro: z.string(),
   avaliacaoDia: z
@@ -23,9 +23,10 @@ export const AvaliacaoSentimentoSchema = z.object({
   gatilhos: z.array(z.string()).optional(),
   usuario: UsuarioSchema,
   textoLivre: z.string().optional(),
+  // textoLivre: z.string().max(250, "O texto livre deve ter no máximo 250 caracteres").optional(), // Para demonstrar erro do backend, descomente essa linha e comente a linha acima
 });
 
-// Schemma de Input para criação/edição (omitindo campos que não são enviados pelo frontend)
+// Schemma de Input para criação/edição
 export const AvaliacaoSentimentoInputSchema = AvaliacaoSentimentoSchema.omit({
   dataRegistro: true,
   usuario: true,

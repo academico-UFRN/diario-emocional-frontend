@@ -121,6 +121,7 @@ export const FormEmotion = ({
 								Quer compartilhar mais sobre seus sentimentos hoje?
 							</FieldLabel>
 							<Textarea {...field} />
+							<FieldError>{form.formState.errors.textoLivre?.message}</FieldError>
 						</Field>
 					)}
 				/>
