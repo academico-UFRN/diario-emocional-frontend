@@ -1,6 +1,6 @@
 import { Heading } from '@/components/-/typography';
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { Edit } from "@hugeicons/core-free-icons";
+import { Edit, Plus } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
 import { ListarRelatosDia } from '@/api/relato-dia/relato-dia.service';
@@ -49,7 +49,8 @@ function RouteComponent() {
 
             className={buttonVariants({ variant: "default", size: "lg" })}
           >
-            Criar Relato
+            <HugeiconsIcon icon={Plus} strokeWidth={2} />
+            Adicionar Relato
           </Link>
         </div>
 
