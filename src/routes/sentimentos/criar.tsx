@@ -50,7 +50,7 @@ function RouteComponent() {
 
 	function onSubmit(dados: AvaliacaoSentimentoInput) {
 		mutate({
-			usuarioId: 2,
+			usuarioId: 1,
 			dados,
 		});
 	}
