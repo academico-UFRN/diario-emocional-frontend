@@ -8,6 +8,9 @@ import type {
 import { Heading } from "@/components/-/typography";
 import { FormEmotion } from "./-components/form";
 import { queryClient } from "@/lib/react-query";
+import { toast } from "@/components/ui/toast";
+import type { ErrorResponse } from "@/api/schemas";
+import type { AxiosError } from "axios";
 
 export const Route = createFileRoute("/sentimentos/criar")({
 	component: RouteComponent,
@@ -27,15 +30,27 @@ function RouteComponent() {
 					...currentEvaluations,
 				],
 			);
+			toast.add({
+				title: "Sucesso",
+				description: "Avaliação adicionada com sucesso.",
+				type: "success",
+			});
 			navigate({
 				to: "/sentimentos",
+			});
+		},
+		onError: (error: AxiosError<ErrorResponse>) => {
+			toast.add({
+				title: error.response?.data?.status && error.response?.data?.error ? `${error.response?.data?.status} - ${error.response?.data?.error}` : "Erro",
+				description: error.response?.data?.message || `Ocorreu um erro ao adicionar a avaliação: ${error}`,
+				type: "error",
 			});
 		},
 	});
 
 	function onSubmit(dados: AvaliacaoSentimentoInput) {
 		mutate({
-			usuarioId: 1,
+			usuarioId: 2,
 			dados,
 		});
 	}
