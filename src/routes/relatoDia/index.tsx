@@ -3,11 +3,12 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { Delete, Edit } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { ListarRelatosDia } from '@/api/relato-dia/relato-dia.service';
+import { BuscarSugestaoRelatoDia, ListarRelatosDia } from '@/api/relato-dia/relato-dia.service';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from "@/components/ui/button";
 import { Heart as PhosphorHeart } from "@phosphor-icons/react";
 import { ExcluirRelato } from './-components/excluir-relato';
+import { useEffect, useState } from 'react';
 
 
 export const Route = createFileRoute('/relatoDia/')({
@@ -23,6 +24,42 @@ function formatarDataDoJava(dataString: string): string {
 }
 
 function RouteComponent() {
+  const [sugestao, setSugestao] = useState<string | null>(null);
+  
+  useEffect(() => {
+  const hoje = new Date().toISOString().split("T")[0];
+
+  const sugestaoSalva = localStorage.getItem("sugestaoRelatoDia");
+
+  if (sugestaoSalva) {
+    const dados = JSON.parse(sugestaoSalva);
+
+    if (dados.data === hoje) {
+      setSugestao(dados.sugestao);
+      return;
+    }
+  }
+
+  BuscarSugestaoRelatoDia(1)
+    .then((response) => {
+      console.log("Sugestão recebida:", response.sugestao);
+      const dados = {
+        sugestao: response.sugestao,
+        data: hoje,
+      };
+
+      localStorage.setItem(
+        "sugestaoRelatoDia",
+        JSON.stringify(dados)
+      );
+
+      setSugestao(response.sugestao);
+    })
+    .catch((error) => {
+      console.error("Erro ao buscar sugestão:", error);
+    });
+}, []);
+
 	const { data } = useQuery({
 		queryKey: ["relatoDia", 1],
 		queryFn: () => ListarRelatosDia(1),
@@ -54,6 +91,20 @@ function RouteComponent() {
 				</p>
 
 			</header>
+          {sugestao && (
+      <Card>
+        <CardHeader>
+          <CardTitle>Sugestão para o seu relato</CardTitle>
+          <CardDescription>
+            Uma ideia baseada nos seus relatos recentes.
+          </CardDescription>
+        </CardHeader>
+
+        <CardFooter>
+          <p>{sugestao}</p>
+        </CardFooter>
+      </Card>
+    )}
 
 <div className="grid grid-cols-2 gap-4">
         {data?.map((relato) => (

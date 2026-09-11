@@ -58,3 +58,7 @@ export const DeletarRelatoDia = async (
 ): Promise<void> => {
 	await api.delete(`/relato/deletar/${usuarioId}/${dataRegistro}`);
 };
+export const BuscarSugestaoRelatoDia = async (usuarioId: number) => {
+   const response = await api.get(`/relato/IA-sugestao/${usuarioId}`);
+   return response.data;
+}
