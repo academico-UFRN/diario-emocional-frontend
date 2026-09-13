@@ -10,9 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CronogramaObrigatorioIndexRouteImport } from './routes/cronograma-obrigatorio/index'
+import { Route as CronogramaObrigatorioCriarRouteImport } from './routes/cronograma-obrigatorio/criar'
 import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
 import { Route as SentimentosIndexRouteImport } from './routes/sentimentos/index'
 import { Route as SentimentosCriarRouteImport } from './routes/sentimentos/criar'
+import { Route as CronogramaObrigatorioIdEditarRouteImport } from './routes/cronograma-obrigatorio/$id.editar'
 import { Route as RelatoDiaCriarDataRegistroRouteImport } from './routes/relatoDia/criar/$dataRegistro'
 import { Route as RelatoDiaEditarDataRegistroRouteImport } from './routes/relatoDia/editar/$dataRegistro'
 import { Route as RelatoDiaIndividualDataRegistroRouteImport } from './routes/relatoDia/individual/$dataRegistro'
@@ -23,6 +26,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CronogramaObrigatorioIndexRoute =
+  CronogramaObrigatorioIndexRouteImport.update({
+    id: '/cronograma-obrigatorio/',
+    path: '/cronograma-obrigatorio/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CronogramaObrigatorioCriarRoute =
+  CronogramaObrigatorioCriarRouteImport.update({
+    id: '/cronograma-obrigatorio/criar',
+    path: '/cronograma-obrigatorio/criar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RelatoDiaIndexRoute = RelatoDiaIndexRouteImport.update({
   id: '/relatoDia/',
   path: '/relatoDia/',
@@ -38,6 +53,12 @@ const SentimentosCriarRoute = SentimentosCriarRouteImport.update({
   path: '/sentimentos/criar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CronogramaObrigatorioIdEditarRoute =
+  CronogramaObrigatorioIdEditarRouteImport.update({
+    id: '/cronograma-obrigatorio/$id/editar',
+    path: '/cronograma-obrigatorio/$id/editar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RelatoDiaCriarDataRegistroRoute =
   RelatoDiaCriarDataRegistroRouteImport.update({
     id: '/relatoDia/criar/$dataRegistro',
@@ -65,9 +86,12 @@ const SentimentosDataRegistroEditarRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
+  '/cronograma-obrigatorio/$id/editar': typeof CronogramaObrigatorioIdEditarRoute
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
@@ -75,9 +99,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/cronograma-obrigatorio': typeof CronogramaObrigatorioIndexRoute
   '/relatoDia': typeof RelatoDiaIndexRoute
   '/sentimentos': typeof SentimentosIndexRoute
+  '/cronograma-obrigatorio/$id/editar': typeof CronogramaObrigatorioIdEditarRoute
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
@@ -86,9 +113,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
+  '/cronograma-obrigatorio/$id/editar': typeof CronogramaObrigatorioIdEditarRoute
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
@@ -98,9 +128,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cronograma-obrigatorio/criar'
     | '/sentimentos/criar'
+    | '/cronograma-obrigatorio/'
     | '/relatoDia/'
     | '/sentimentos/'
+    | '/cronograma-obrigatorio/$id/editar'
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
@@ -108,9 +141,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cronograma-obrigatorio/criar'
     | '/sentimentos/criar'
+    | '/cronograma-obrigatorio'
     | '/relatoDia'
     | '/sentimentos'
+    | '/cronograma-obrigatorio/$id/editar'
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
@@ -118,9 +154,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/cronograma-obrigatorio/criar'
     | '/sentimentos/criar'
+    | '/cronograma-obrigatorio/'
     | '/relatoDia/'
     | '/sentimentos/'
+    | '/cronograma-obrigatorio/$id/editar'
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
@@ -129,9 +168,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CronogramaObrigatorioCriarRoute: typeof CronogramaObrigatorioCriarRoute
   SentimentosCriarRoute: typeof SentimentosCriarRoute
+  CronogramaObrigatorioIndexRoute: typeof CronogramaObrigatorioIndexRoute
   RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
   SentimentosIndexRoute: typeof SentimentosIndexRoute
+  CronogramaObrigatorioIdEditarRoute: typeof CronogramaObrigatorioIdEditarRoute
   RelatoDiaCriarDataRegistroRoute: typeof RelatoDiaCriarDataRegistroRoute
   RelatoDiaEditarDataRegistroRoute: typeof RelatoDiaEditarDataRegistroRoute
   RelatoDiaIndividualDataRegistroRoute: typeof RelatoDiaIndividualDataRegistroRoute
@@ -145,6 +187,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cronograma-obrigatorio/': {
+      id: '/cronograma-obrigatorio/'
+      path: '/cronograma-obrigatorio'
+      fullPath: '/cronograma-obrigatorio/'
+      preLoaderRoute: typeof CronogramaObrigatorioIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cronograma-obrigatorio/criar': {
+      id: '/cronograma-obrigatorio/criar'
+      path: '/cronograma-obrigatorio/criar'
+      fullPath: '/cronograma-obrigatorio/criar'
+      preLoaderRoute: typeof CronogramaObrigatorioCriarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/relatoDia/': {
@@ -166,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/sentimentos/criar'
       fullPath: '/sentimentos/criar'
       preLoaderRoute: typeof SentimentosCriarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cronograma-obrigatorio/$id/editar': {
+      id: '/cronograma-obrigatorio/$id/editar'
+      path: '/cronograma-obrigatorio/$id/editar'
+      fullPath: '/cronograma-obrigatorio/$id/editar'
+      preLoaderRoute: typeof CronogramaObrigatorioIdEditarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/relatoDia/criar/$dataRegistro': {
@@ -201,9 +264,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CronogramaObrigatorioCriarRoute: CronogramaObrigatorioCriarRoute,
   SentimentosCriarRoute: SentimentosCriarRoute,
+  CronogramaObrigatorioIndexRoute: CronogramaObrigatorioIndexRoute,
   RelatoDiaIndexRoute: RelatoDiaIndexRoute,
   SentimentosIndexRoute: SentimentosIndexRoute,
+  CronogramaObrigatorioIdEditarRoute: CronogramaObrigatorioIdEditarRoute,
   RelatoDiaCriarDataRegistroRoute: RelatoDiaCriarDataRegistroRoute,
   RelatoDiaEditarDataRegistroRoute: RelatoDiaEditarDataRegistroRoute,
   RelatoDiaIndividualDataRegistroRoute: RelatoDiaIndividualDataRegistroRoute,
