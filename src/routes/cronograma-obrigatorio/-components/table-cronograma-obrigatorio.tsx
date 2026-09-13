@@ -184,18 +184,10 @@ export function TableCronogramaObrigatorio() {
                         key={item.id ?? `${item.titulo}-${item.horaInicio}`}
                         className="rounded-md border border-border bg-background p-3 shadow-sm"
                       >
-                        <div className="mb-2 flex items-start justify-between gap-2">
-                          <div>
-                            <p className="font-semibold text-foreground">{item.titulo}</p>
-                            {item.subtitulo && (
-                              <p className="text-xs text-muted-foreground">{item.subtitulo}</p>
-                            )}
-                          </div>
-
-                          {item.ativo ? (
-                            <Badge variant="secondary">Ativa</Badge>
-                          ) : (
-                            <Badge variant="outline">Inativa</Badge>
+                        <div className="mb-2">
+                          <p className="font-semibold text-foreground">{item.titulo}</p>
+                          {item.subtitulo && (
+                            <p className="text-xs text-muted-foreground">{item.subtitulo}</p>
                           )}
                         </div>
 
