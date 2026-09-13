@@ -68,6 +68,25 @@ function getSemanaAtual() {
   });
 }
 
+function paraMinutos(hora: string): number {
+  const [horas, minutos] = hora.split(":").map(Number);
+  return horas * 60 + (Number.isNaN(minutos) ? 0 : minutos);
+}
+
+function ordenarAtividadesPorHorario<T extends { horaInicio: string; horaFim: string }>(
+  atividades: T[],
+): T[] {
+  return [...atividades].sort((a, b) => {
+    const diferencaInicio = paraMinutos(a.horaInicio) - paraMinutos(b.horaInicio);
+
+    if (diferencaInicio !== 0) {
+      return diferencaInicio;
+    }
+
+    return paraMinutos(a.horaFim) - paraMinutos(b.horaFim);
+  });
+}
+
 export function TableCronogramaObrigatorio() {
   const useQueryClient = queryClient;
 
@@ -90,6 +109,10 @@ export function TableCronogramaObrigatorio() {
         tarefasPorDia[diaKey].push(item);
       }
     });
+  });
+
+  (Object.keys(tarefasPorDia) as Array<keyof typeof tarefasPorDia>).forEach((diaKey) => {
+    tarefasPorDia[diaKey] = ordenarAtividadesPorHorario(tarefasPorDia[diaKey]);
   });
 
   const mutateDelete = useMutation({
