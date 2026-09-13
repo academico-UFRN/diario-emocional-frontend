@@ -36,11 +36,41 @@ export const criarCronogramaObrigatorio = async ({
 export const listarCronogramasObrigatorios = async (
   usuarioId: number,
 ): Promise<CronogramaObrigatorio[]> => {
-  const response: AxiosResponse<CronogramaObrigatorio[]> = await api.get(
+  const response = await api.get(
     `/api/atividades-obrigatorias/${usuarioId}`,
   );
 
-  return response.data;
+  const payload = response.data as
+    | CronogramaObrigatorio[]
+    | { atividades?: CronogramaObrigatorio[] }
+    | { data?: CronogramaObrigatorio[] }
+    | { content?: CronogramaObrigatorio[] }
+    | null
+    | undefined;
+
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  const cronograma = payload as {
+    atividades?: CronogramaObrigatorio[];
+    data?: CronogramaObrigatorio[];
+    content?: CronogramaObrigatorio[];
+  } | null | undefined;
+
+  if (cronograma && Array.isArray(cronograma.atividades)) {
+    return cronograma.atividades;
+  }
+
+  if (cronograma && Array.isArray(cronograma.data)) {
+    return cronograma.data;
+  }
+
+  if (cronograma && Array.isArray(cronograma.content)) {
+    return cronograma.content;
+  }
+
+  return [];
 };
 
 export const obterCronogramaObrigatorio = async (
