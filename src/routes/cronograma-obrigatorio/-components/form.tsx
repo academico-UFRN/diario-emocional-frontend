@@ -6,6 +6,7 @@ import {
   CronogramaObrigatorioInputSchema,
   type DiaSemana,
 } from "@/api/cronograma-obrigatorio/schema";
+import type { LembreteDto, TipoLembrete } from "@/api/lembretes/schema";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -27,12 +28,19 @@ const DIAS_SEMANA: { value: DiaSemana; label: string }[] = [
   { value: "DOMINGO", label: "Dom" },
 ];
 
+const TIPOS_LEMBRETE: { value: TipoLembrete; label: string }[] = [
+  { value: "TRINTA_MINUTOS_ANTES", label: "30 minutos antes" },
+  { value: "QUINZE_MINUTOS_ANTES", label: "15 minutos antes" },
+  { value: "HORARIO", label: "No horário" },
+];
+
 type FormCronogramaObrigatorioValues = {
   titulo: string;
   subtitulo?: string | null;
   horaInicio: string;
   horaFim: string;
   diasDaSemana: DiaSemana[];
+  lembretes?: LembreteDto | null;
   ativo: boolean;
 };
 
@@ -59,6 +67,9 @@ export function FormCronogramaObrigatorio({
       horaInicio: "",
       horaFim: "",
       diasDaSemana: [],
+      lembretes: {
+        tipoLembreteList: [],
+      },
       ativo: true,
       ...initialValues,
     },
@@ -157,6 +168,43 @@ export function FormCronogramaObrigatorio({
 
               <FieldError>
                 {form.formState.errors.diasDaSemana?.message}
+              </FieldError>
+            </Field>
+          )}
+        />
+      </FieldGroup>
+
+      <FieldGroup>
+        <Controller
+          name="lembretes.tipoLembreteList"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="tipoLembreteList">
+                Tipos de lembrete
+              </FieldLabel>
+              <ToggleGroup
+                id="tipoLembreteList"
+                multiple
+                variant="outline"
+                className="flex-wrap justify-start gap-2"
+                value={field.value ?? []}
+                onValueChange={(values) =>
+                  field.onChange(values as TipoLembrete[])
+                }
+              >
+                {TIPOS_LEMBRETE.map((tipo) => (
+                  <ToggleGroupItem
+                    key={tipo.value}
+                    value={tipo.value}
+                    aria-label={tipo.label}
+                  >
+                    {tipo.label}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+              <FieldError>
+                {form.formState.errors.lembretes?.tipoLembreteList?.message}
               </FieldError>
             </Field>
           )}

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LembreteDtoSchema } from "../lembretes/schema";
 
 export const DiaSemanaSchema = z.enum([
   "SEGUNDA",
@@ -19,6 +20,7 @@ export const CronogramaObrigatorioSchema = z.object({
   diasDaSemana: z
     .array(DiaSemanaSchema)
     .min(1, "Selecione pelo menos um dia da semana"),
+  lembretes: LembreteDtoSchema.nullable().optional(),
   usuarioId: z.number(),
   dataCriacao: z.string().optional(),
   dataAtualizacao: z.string().optional(),
@@ -33,16 +35,12 @@ export const CronogramaObrigatorioInputSchema = z.object({
   diasDaSemana: z
     .array(DiaSemanaSchema)
     .min(1, "Selecione pelo menos um dia da semana"),
+  lembretes: LembreteDtoSchema.nullable().optional(),
   ativo: z.boolean(),
 });
 
 export type DiaSemana = z.infer<typeof DiaSemanaSchema>;
 export type CronogramaObrigatorio = z.infer<typeof CronogramaObrigatorioSchema>;
-export type CronogramaObrigatorioInput = {
-  titulo: string;
-  subtitulo?: string | null;
-  horaInicio: string;
-  horaFim: string;
-  diasDaSemana: DiaSemana[];
-  ativo: boolean;
-};
+export type CronogramaObrigatorioInput = z.infer<
+  typeof CronogramaObrigatorioInputSchema
+>;

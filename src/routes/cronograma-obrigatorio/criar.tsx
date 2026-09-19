@@ -34,7 +34,9 @@ function RouteComponent() {
         type: "success",
       });
 
-      navigate({ to: "/cronograma-obrigatorio" });
+      window.setTimeout(() => {
+        void navigate({ to: "/cronograma-obrigatorio" });
+      }, 350);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.add({
