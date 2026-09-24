@@ -44,9 +44,11 @@ function RouteComponent() {
 				description: "Avaliação editada com sucesso.",
 				type: "success",
 			});
-			await navigate({
-				to: "/sentimentos",
-			});
+			window.setTimeout(() => {
+				void navigate({
+					to: "/sentimentos",
+				});
+			}, 350);
 		},
 		onError: (error: AxiosError<ErrorResponse>) => {
 			toast.add({
