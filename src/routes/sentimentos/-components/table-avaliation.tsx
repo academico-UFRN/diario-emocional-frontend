@@ -2,6 +2,11 @@ import { Delete, Edit, Sad01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import {
+	deletarAvaliacaoSentimento,
+	listarAvaliacoesSentimento,
+} from "@/api/avaliacao-sentimento/avalicao-sentimento.service";
+import { DialogDestructive } from "@/components/-/dialog-destructive";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -12,16 +17,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { formatarDataFeed } from "@/lib/date-fns";
+import { queryClient } from "@/lib/react-query";
 import {
 	FREQUENCY_LABELS,
 	GATILHOS,
 	SENTIMENTOS,
 } from "../-data/-data-emotion";
 import { CardSkeleton } from "./skeleton-card";
-import { DialogDestructive } from "@/components/-/dialog-destructive";
-import { queryClient } from "@/lib/react-query";
-import { deletarAvaliacaoSentimento, listarAvaliacoesSentimento } from "@/api/avaliacao-sentimento/avalicao-sentimento.service";
-import { formatarDataFeed } from "@/lib/date-fns";
 
 export const TableAvaliation = () => {
 	const useQueryClient = queryClient;
@@ -50,18 +53,19 @@ export const TableAvaliation = () => {
 	if (!data || data.length === 0) {
 		return (
 			<div className="flex h-200 flex-col items-center justify-center gap-4">
-				<HugeiconsIcon icon={Sad01Icon} strokeWidth={2} className="text-muted-foreground" />
+				<HugeiconsIcon
+					icon={Sad01Icon}
+					strokeWidth={2}
+					className="text-muted-foreground"
+				/>
 				<p className="text-muted-foreground">Nenhuma avaliação encontrada.</p>
 			</div>
 		);
 	}
 
-
 	return (
 		<div className="flex flex-col gap-4">
 			{data?.map((avaliacao) => {
-
-
 				return (
 					<Card key={`${avaliacao.usuario.id}-${avaliacao.dataRegistro}`}>
 						<CardHeader className="flex items-center gap-4">
@@ -81,7 +85,9 @@ export const TableAvaliation = () => {
 														: "❓"}
 							</div>
 							<div>
-								<CardTitle>{formatarDataFeed(avaliacao.dataRegistro)}</CardTitle>
+								<CardTitle>
+									{formatarDataFeed(avaliacao.dataRegistro)}
+								</CardTitle>
 								<CardDescription>
 									{avaliacao.avaliacaoDia === 5
 										? "Dia sensacional! ✨"
@@ -167,15 +173,25 @@ export const TableAvaliation = () => {
 							<DialogDestructive
 								title="Deseja deletar essa avalição?"
 								description="Esta ação não pode ser desfeita."
-								triggerNode={<><HugeiconsIcon icon={Delete} strokeWidth={2} />Deletar Avaliação</>}
-								confirmNode={<><HugeiconsIcon icon={Delete} strokeWidth={2} />Deletar Avaliação</>}
+								triggerNode={
+									<>
+										<HugeiconsIcon icon={Delete} strokeWidth={2} />
+										Deletar Avaliação
+									</>
+								}
+								confirmNode={
+									<>
+										<HugeiconsIcon icon={Delete} strokeWidth={2} />
+										Deletar Avaliação
+									</>
+								}
 								onConfirm={() => handleDelete(avaliacao.dataRegistro)}
 								isPending={mutateDelete.isPending}
 								isSuccess={mutateDelete.isSuccess}
 							/>
 						</CardFooter>
 					</Card>
-				)
+				);
 			})}
 		</div>
 	);
