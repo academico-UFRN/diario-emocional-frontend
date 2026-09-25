@@ -16,6 +16,10 @@ export interface ListarChatsParams {
     usuarioId: number;
 }
 
+export interface DeletarChatParams {
+    chatId: string;
+}
+
 
 export const listarChats = async ({ usuarioId }: ListarChatsParams): Promise<ChatResumoResponse[]> => {
     const { data } = await api.get<ChatResumoResponse[]>(`/chat/ai/${usuarioId}`);
@@ -39,3 +43,7 @@ export const enviarMensagemChat = async (
     const { data } = await api.post<ChatResponse>(`/chat/ai/${chatId}/${usuarioId}`, dados);
     return data;
 };
+
+export const deletarChat = async ({ chatId }: DeletarChatParams): Promise<void> => {
+    await api.delete(`/chat/ai/${chatId}`);
+}
