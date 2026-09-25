@@ -157,9 +157,9 @@ export function TableCronogramaObrigatorio() {
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border bg-card">
+    <div className="overflow-x-auto w-full rounded-lg border border-border bg-card">
       <table className="min-w-full border-collapse">
-        <thead>
+        <thead className="sticky top-0 bg-background ">
           <tr>
             {diasDaSemanaAtual.map(({ diaKey, dataFormatada, isHoje }) => (
               <th
