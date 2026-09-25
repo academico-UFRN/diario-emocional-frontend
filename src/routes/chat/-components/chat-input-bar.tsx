@@ -1,21 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    ArrowDown,
-    ChevronDown,
-    ShieldCheck,
-} from "lucide-react";
+import { ArrowDown, ChevronDown, Mic, MicOff, ShieldCheck } from "lucide-react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import SpeechRecognition, {
+    useSpeechRecognition,
+} from "react-speech-recognition";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    Field,
-    FieldError,
-    FieldGroup,
-} from "@/components/ui/field";
+import { Field, FieldError, FieldGroup } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
 import {
     Tooltip,
@@ -33,7 +29,6 @@ interface InputChatProps {
 }
 
 export const InputChat = ({ onSubmit, isPending }: InputChatProps) => {
-
     const form = useForm<z.infer<typeof ChatInputSchema>>({
         resolver: zodResolver(ChatInputSchema),
         defaultValues: {
@@ -41,12 +36,47 @@ export const InputChat = ({ onSubmit, isPending }: InputChatProps) => {
         },
     });
 
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition,
+    } = useSpeechRecognition();
+
+    useEffect(() => {
+        if (transcript) {
+            form.setValue("mensagem", transcript, { shouldValidate: true });
+        }
+
+
+    }, [transcript, form.setValue]);
+
+    useEffect(() => {
+        if (isPending) {
+            SpeechRecognition.stopListening();
+            resetTranscript();
+        }
+    }, [isPending, resetTranscript]);
+
+    function alternarMicrofone() {
+        if (listening) {
+            SpeechRecognition.stopListening();
+            resetTranscript(); // ✅ Adicione aqui também
+            return;
+        }
+
+        resetTranscript();
+        SpeechRecognition.startListening({
+            continuous: true,
+            language: "pt-BR",
+        });
+    }
 
     return (
         <form
             id="chat-input-form"
             onSubmit={form.handleSubmit((data) => {
-                onSubmit(data.mensagem)
+                onSubmit(data.mensagem);
                 form.resetField("mensagem");
             })}
             className="flex flex-col gap-2 pb-6 w-full"
@@ -80,6 +110,7 @@ export const InputChat = ({ onSubmit, isPending }: InputChatProps) => {
                     />
                 </FieldGroup>
                 <div className="flex items-center gap-2">
+
                     <Tooltip>
                         <TooltipTrigger>
                             <DropdownMenu>
@@ -95,6 +126,33 @@ export const InputChat = ({ onSubmit, isPending }: InputChatProps) => {
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>Novos modelos em breve</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger
+                            render={
+                                <Button
+                                    type="button"
+                                    variant={listening ? "default" : "ghost"}
+                                    size="icon-sm"
+                                    disabled={isPending || !browserSupportsSpeechRecognition}
+                                    onClick={alternarMicrofone}
+                                    aria-label={
+                                        listening ? "Parar microfone" : "Iniciar microfone"
+                                    }
+                                />
+                            }
+                        >
+                            {listening ? <MicOff /> : <Mic />}
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>
+                                {!browserSupportsSpeechRecognition
+                                    ? "Reconhecimento de voz indisponível"
+                                    : listening
+                                        ? "Parar microfone"
+                                        : "Usar microfone"}
+                            </p>
                         </TooltipContent>
                     </Tooltip>
                     {form.watch("mensagem") && (

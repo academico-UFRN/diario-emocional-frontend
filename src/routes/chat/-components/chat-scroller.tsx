@@ -19,10 +19,10 @@ interface ChatScrollerProps {
 export const ChatScroller = ({ mensagens, isPending }: ChatScrollerProps) => {
     return (
         <MessageScrollerProvider>
-            <MessageScroller className="mx-auto h-140 w-full flex-1 max-w-4xl gap-0">
+            <MessageScroller className=" h-140 w-full flex-1 gap-0">
                 <MessageScrollerViewport>
 
-                    <MessageScrollerContent className="flex-1 overflow-hidden py-4 px-2">
+                    <MessageScrollerContent className="flex-1 mx-auto w-full max-w-4xl overflow-hidden py-4">
                         {mensagens.map((message) => (
                             <MessageScrollerItem
                                 key={message.id}
@@ -47,7 +47,14 @@ export const ChatScroller = ({ mensagens, isPending }: ChatScrollerProps) => {
                                     </MessageAvatar>
                                     <MessageContent>
                                         <Bubble variant={message.papel === "USER" ? "default" : "muted"}>
-                                            <BubbleContent>{message.conteudo}</BubbleContent>
+                                            <BubbleContent><div>
+                                                <div>
+                                                    {message.conteudo}
+                                                </div>
+                                                <div className="text-xs text-primary-foreground/60 text-end mt-1">
+                                                    {new Date(message.criadoEm).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </div>
+                                            </div></BubbleContent>
                                         </Bubble>
                                     </MessageContent>
                                 </Message>

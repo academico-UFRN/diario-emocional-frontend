@@ -56,12 +56,6 @@ function RouteComponent() {
           };
         },
       );
-
-      toast.add({
-        title: "Mensagem enviada",
-        description: "Sua mensagem foi enviada com sucesso.",
-        type: "success",
-      });
       setTempChatId(`temp-id-${Date.now()}`);
     },
     onError: (error) => {

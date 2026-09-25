@@ -23,11 +23,6 @@ export const Chat = () => {
                 to: "/chat/$chatId",
                 params: { chatId: chat.id },
             });
-            toast.add({
-                title: "Chat criado",
-                description: "Seu chat foi criado com sucesso.",
-                type: "success",
-            });
         },
         onError: (error) => {
             setMensagemInicial(undefined);
