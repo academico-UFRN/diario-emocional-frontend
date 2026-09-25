@@ -186,7 +186,7 @@ export function TableCronogramaObrigatorio() {
               <td
                 key={`${diaKey}-coluna`}
                 className={[
-                  "border-r border-border p-3 align-top last:border-r-0",
+                  "border-r border-border p-3 align-top last:border-r-0 min-w-40",
                   isHoje ? "bg-primary/5" : "bg-background",
                 ].join(" ")}
               >
@@ -195,7 +195,7 @@ export function TableCronogramaObrigatorio() {
                     tarefasPorDia[diaKey].map((item) => (
                       <div
                         key={item.id ?? `${item.titulo}-${item.horaInicio}`}
-                        className="rounded-md border border-border bg-background p-3 shadow-sm min-w-1xs"
+                        className="rounded-md border border-border bg-background p-3 shadow-sm"
                       >
                         <div className="mb-2">
                           <p className="font-semibold text-foreground">
