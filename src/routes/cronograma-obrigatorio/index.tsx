@@ -11,8 +11,8 @@ export const Route = createFileRoute("/cronograma-obrigatorio/")({
 
 function RouteComponent() {
   return (
-    <main className="mx-auto flex max-w-270 w-full flex-col gap-8 p-4">
-      <header className="flex flex-col gap-4">
+    <main className="mx-auto flex  flex-col gap-8 p-4">
+      <header className="flex flex-col gap-4 max-w-270 w-full m-auto">
         <div className="flex items-center justify-between gap-4">
           <Heading as="h1" variant="h3">
             Cronograma Obrigatório
