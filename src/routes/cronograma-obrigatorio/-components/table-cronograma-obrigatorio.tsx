@@ -195,7 +195,7 @@ export function TableCronogramaObrigatorio() {
                     tarefasPorDia[diaKey].map((item) => (
                       <div
                         key={item.id ?? `${item.titulo}-${item.horaInicio}`}
-                        className="rounded-md border border-border bg-background p-3 shadow-sm"
+                        className="rounded-md border border-border bg-background p-3 shadow-sm min-w-1xs"
                       >
                         <div className="mb-2">
                           <p className="font-semibold text-foreground">
@@ -216,7 +216,7 @@ export function TableCronogramaObrigatorio() {
 
                         <div className="flex justify-end gap-2">
                           <Link
-                            className={`border! border-border! ${buttonVariants({ variant: "outline", size: "sm" })}`}
+                            className={`border! border-border! ${buttonVariants({ variant: "outline", size: "icon-lg" })}`}
                             to="/cronograma-obrigatorio/$id/editar"
                             params={{ id: String(item.id ?? "0") }}
                           >
