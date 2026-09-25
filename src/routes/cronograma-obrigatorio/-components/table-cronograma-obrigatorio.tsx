@@ -165,7 +165,7 @@ export function TableCronogramaObrigatorio() {
               <th
                 key={diaKey}
                 className={[
-                  "border-b border-border p-3 text-left text-sm font-semibold text-foreground",
+                  "min-w-40 border-b border-border p-3 text-left text-sm font-semibold text-foreground",
                   isHoje ? "bg-primary/10" : "bg-muted/40",
                 ].join(" ")}
               >
@@ -186,7 +186,7 @@ export function TableCronogramaObrigatorio() {
               <td
                 key={`${diaKey}-coluna`}
                 className={[
-                  "border-r border-border p-3 align-top last:border-r-0 min-w-40",
+                  "min-w-40 border-r border-border p-3 align-top last:border-r-0",
                   isHoje ? "bg-primary/5" : "bg-background",
                 ].join(" ")}
               >
