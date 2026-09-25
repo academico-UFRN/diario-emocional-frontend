@@ -1,24 +1,32 @@
-import { Heading } from '@/components/-/typography';
-import { createFileRoute, Link } from '@tanstack/react-router'
 import { Edit, Plus } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useQuery } from "@tanstack/react-query";
-import { BuscarSugestaoRelatoDia, ListarRelatosDia } from '@/api/relato-dia/relato-dia.service';
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Heart } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  BuscarSugestaoRelatoDia,
+  ListarRelatosDia,
+} from "@/api/relato-dia/relato-dia.service";
+import { Heading } from "@/components/-/typography";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Heart as PhosphorHeart } from "@phosphor-icons/react";
-import { ExcluirRelato } from './-components/excluir-relato';
-import { useState, useEffect } from 'react';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ExcluirRelato } from "./-components/excluir-relato";
 
-
-export const Route = createFileRoute('/relatoDia/')({
+export const Route = createFileRoute("/relatoDia/")({
   component: RouteComponent,
-})
+});
 
 function formatarDataDoJava(dataString: string): string {
-  if (!dataString) return '';
+  if (!dataString) return "";
 
-  const [ano, mes, dia] = dataString.split('-');
+  const [ano, mes, dia] = dataString.split("-");
 
   return `${dia}/${mes}/${ano}`;
 }
@@ -26,39 +34,36 @@ function formatarDataDoJava(dataString: string): string {
 function RouteComponent() {
   const [sugestao, setSugestao] = useState<string | null>(null);
 
-   useEffect(() => {
-  const hoje = new Date().toISOString().split("T")[0];
+  useEffect(() => {
+    const hoje = new Date().toISOString().split("T")[0];
 
-  const sugestaoSalva = localStorage.getItem("sugestaoRelatoDia");
+    const sugestaoSalva = localStorage.getItem("sugestaoRelatoDia");
 
-  if (sugestaoSalva) {
-    const dados = JSON.parse(sugestaoSalva);
+    if (sugestaoSalva) {
+      const dados = JSON.parse(sugestaoSalva);
 
-    if (dados.data === hoje) {
-      setSugestao(dados.sugestao);
-      return;
+      if (dados.data === hoje) {
+        setSugestao(dados.sugestao);
+        return;
+      }
     }
-  }
 
-  BuscarSugestaoRelatoDia(1)
-    .then((response) => {
-      console.log("Sugestão recebida:", response.sugestao);
-      const dados = {
-        sugestao: response.sugestao,
-        data: hoje,
-      };
+    BuscarSugestaoRelatoDia(1)
+      .then((response) => {
+        console.log("Sugestão recebida:", response.sugestao);
+        const dados = {
+          sugestao: response.sugestao,
+          data: hoje,
+        };
 
-      localStorage.setItem(
-        "sugestaoRelatoDia",
-        JSON.stringify(dados)
-      );
+        localStorage.setItem("sugestaoRelatoDia", JSON.stringify(dados));
 
-      setSugestao(response.sugestao);
-    })
-    .catch((error) => {
-      console.error("Erro ao buscar sugestão:", error);
-    });
-}, []);
+        setSugestao(response.sugestao);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar sugestão:", error);
+      });
+  }, []);
 
   const { data } = useQuery({
     queryKey: ["relatoDia", 1],
@@ -73,16 +78,15 @@ function RouteComponent() {
   ].join("-");
 
   return (
-    <main className="flex flex-col gap-8 p-4 max-w-270 mx-auto">
+    <main className="flex flex-col gap-8 p-4 max-w-270 w-full mx-auto">
       <header className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
-          <Heading as="h1" variant="h1">
+          <Heading as="h1" variant="h3">
             Relato do dia
           </Heading>
           <Link
             to={`/relatoDia/criar/$dataRegistro`}
             params={{ dataRegistro: dataRegistro }}
-
             className={buttonVariants({ variant: "default", size: "lg" })}
           >
             <HugeiconsIcon icon={Plus} strokeWidth={2} />
@@ -91,25 +95,24 @@ function RouteComponent() {
         </div>
 
         <p>
-          Aqui você pode editar, deletar e acompanhar seus relatos diários ao longo
-          do tempo.
+          Aqui você pode editar, deletar e acompanhar seus relatos diários ao
+          longo do tempo.
         </p>
-
       </header>
-    {sugestao && (
-      <Card>
-        <CardHeader>
-          <CardTitle>Sugestão para o seu relato</CardTitle>
-          <CardDescription>
-            Uma ideia baseada nos seus relatos recentes.
-          </CardDescription>
-        </CardHeader>
+      {sugestao && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Sugestão para o seu relato</CardTitle>
+            <CardDescription>
+              Uma ideia baseada nos seus relatos recentes.
+            </CardDescription>
+          </CardHeader>
 
-        <CardFooter>
-          <p>{sugestao}</p>
-        </CardFooter>
-      </Card>
-    )}
+          <CardFooter>
+            <p>{sugestao}</p>
+          </CardFooter>
+        </Card>
+      )}
 
       <div className="grid grid-cols-2 gap-4">
         {data?.map((relato) => (
@@ -119,7 +122,11 @@ function RouteComponent() {
                 <CardTitle>{formatarDataDoJava(relato.dataRegistro)}</CardTitle>
                 <CardTitle>{relato.titulo}</CardTitle>
               </div>
-              <PhosphorHeart size={32} color="hotpink" weight={relato.favorito ? "fill" : "regular"} />
+              <Heart
+                className="size-6"
+                color="hotpink"
+                fill={relato.favorito ? "hotpink" : "none"}
+              />
             </CardHeader>
 
             {/* Torna o Card inteiro clicável de forma nativa e limpa */}
@@ -130,17 +137,18 @@ function RouteComponent() {
             />
 
             <CardFooter className="flex justify-end gap-2 z-10 relative">
-              <Button variant="outline" >
-                <Link to="/relatoDia/editar/$dataRegistro" params={{ dataRegistro: relato.dataRegistro }} className="flex items-center gap-2">
+              <Button variant="outline">
+                <Link
+                  to="/relatoDia/editar/$dataRegistro"
+                  params={{ dataRegistro: relato.dataRegistro }}
+                  className="flex items-center gap-2"
+                >
                   <HugeiconsIcon icon={Edit} strokeWidth={2} />
                   <p>Editar relato</p>
                 </Link>
               </Button>
 
-              <ExcluirRelato
-                dataRegistro={relato.dataRegistro}
-                usuarioId={1}
-              />
+              <ExcluirRelato dataRegistro={relato.dataRegistro} usuarioId={1} />
             </CardFooter>
           </Card>
         ))}
@@ -148,4 +156,3 @@ function RouteComponent() {
     </main>
   );
 }
-

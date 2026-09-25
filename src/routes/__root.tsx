@@ -1,16 +1,19 @@
 // src/routes/__root.tsx
 
+import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { ModeToggle } from "@/components/-/mode-toggle";
 import { LembreteWatcher } from "@/components/lembrete-watcher";
 import { Toaster } from "@/components/ui/toast";
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
   component: () => (
-    <>
-      <div className="flex gap-8 justify-between p-2 border-b items-center">
+    <div className="flex flex-col h-screen overflow-hidden">
+      <div className="flex gap-8 justify-between p-2 border-b items-center shrink-0">
         <nav className="flex gap-4 item-center">
-          <Link to="/" className="p-1 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full">
+          <Link
+            to="/"
+            className="p-1 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full"
+          >
             <img src="/logo.png" alt="Logo" className="h-4 w-4" />
           </Link>
           <Link to="/relatoDia" className="group flex flex-col relative p-0">
@@ -21,8 +24,15 @@ export const Route = createRootRoute({
             Avaliação de sentimentos
             <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
           </Link>
-          <Link to="/cronograma-obrigatorio" className="group flex flex-col relative p-0">
+          <Link
+            to="/cronograma-obrigatorio"
+            className="group flex flex-col relative p-0"
+          >
             Cronograma obrigatório
+            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
+          </Link>
+          <Link to="/chat" className="group flex flex-col relative p-0">
+            Método Socrático
             <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
           </Link>
         </nav>
@@ -31,11 +41,11 @@ export const Route = createRootRoute({
 
         <ModeToggle />
       </div>
-      <main className="p-4">
+      <main className="flex flex-col flex-1 min-h-0 overflow-auto">
         <Outlet />
       </main>
       <LembreteWatcher />
       <Toaster />
-    </>
+    </div>
   ),
 });

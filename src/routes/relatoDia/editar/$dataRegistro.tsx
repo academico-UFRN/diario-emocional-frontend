@@ -1,12 +1,19 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams, useNavigate, createFileRoute } from "@tanstack/react-router";
-import { BuscarRelatoDia, EditarRelatoDia } from "@/api/relato-dia/relato-dia.service";
-import type { RelatoDiaEditarDto } from "@/api/relato-dia/schema";
-import { RelatoForm } from "../-components/form";
-import { Button } from "@/components/ui/button";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  createFileRoute,
+  useNavigate,
+  useParams,
+} from "@tanstack/react-router";
 import { useState } from "react";
+import {
+  BuscarRelatoDia,
+  EditarRelatoDia,
+} from "@/api/relato-dia/relato-dia.service";
+import type { RelatoDiaEditarDto } from "@/api/relato-dia/schema";
+import { Button } from "@/components/ui/button";
+import { RelatoForm } from "../-components/form";
 
-export const Route = createFileRoute('/relatoDia/editar/$dataRegistro')({
+export const Route = createFileRoute("/relatoDia/editar/$dataRegistro")({
   component: RouteComponent,
 });
 
@@ -14,8 +21,8 @@ export function RouteComponent() {
   const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
   function formatarDataDoJava(dataString: string): string {
-    if (!dataString) return ''; 
-    const [ano, mes, dia] = dataString.split('-');
+    if (!dataString) return "";
+    const [ano, mes, dia] = dataString.split("-");
     return `${dia}/${mes}/${ano}`;
   }
 
@@ -24,7 +31,7 @@ export function RouteComponent() {
 
   // 1. Pega os parâmetros da URL
   const { dataRegistro } = useParams({
-    from: Route.id
+    from: Route.id,
   }) as {
     dataRegistro: string;
   };
@@ -60,7 +67,9 @@ export function RouteComponent() {
 
   // 6. Estados de carregamento e validação
   if (isLoading) {
-    return <div className="p-4 max-w-270 mx-auto">Carregando dados do relato...</div>;
+    return (
+      <div className="p-4 max-w-270 mx-auto">Carregando dados do relato...</div>
+    );
   }
 
   if (!relato) {
@@ -69,8 +78,10 @@ export function RouteComponent() {
 
   return (
     <>
-      <main className="flex flex-col gap-8 p-4 max-w-270 mx-auto">
-        <h1 className="text-2xl font-bold">{formatarDataDoJava(relato.dataRegistro)}</h1>
+      <main className="flex flex-col gap-8 p-4 max-w-270 w-full mx-auto">
+        <h1 className="text-2xl font-bold">
+          {formatarDataDoJava(relato.dataRegistro)}
+        </h1>
 
         <RelatoForm
           key={relato.dataRegistro}

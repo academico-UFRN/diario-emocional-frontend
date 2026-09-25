@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChatIndexRouteImport } from './routes/chat/index'
+import { Route as ChatChatIdRouteImport } from './routes/chat/$chatId'
+import { Route as ChatNovoRouteImport } from './routes/chat/novo'
 import { Route as CronogramaObrigatorioIndexRouteImport } from './routes/cronograma-obrigatorio/index'
 import { Route as CronogramaObrigatorioCriarRouteImport } from './routes/cronograma-obrigatorio/criar'
 import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
@@ -24,6 +27,21 @@ import { Route as SentimentosDataRegistroEditarRouteImport } from './routes/sent
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatIndexRoute = ChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatChatIdRoute = ChatChatIdRouteImport.update({
+  id: '/chat/$chatId',
+  path: '/chat/$chatId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatNovoRoute = ChatNovoRouteImport.update({
+  id: '/chat/novo',
+  path: '/chat/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CronogramaObrigatorioIndexRoute =
@@ -86,8 +104,11 @@ const SentimentosDataRegistroEditarRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chat/$chatId': typeof ChatChatIdRoute
+  '/chat/novo': typeof ChatNovoRoute
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/chat/': typeof ChatIndexRoute
   '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
@@ -99,8 +120,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/chat/$chatId': typeof ChatChatIdRoute
+  '/chat/novo': typeof ChatNovoRoute
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/chat': typeof ChatIndexRoute
   '/cronograma-obrigatorio': typeof CronogramaObrigatorioIndexRoute
   '/relatoDia': typeof RelatoDiaIndexRoute
   '/sentimentos': typeof SentimentosIndexRoute
@@ -113,8 +137,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chat/$chatId': typeof ChatChatIdRoute
+  '/chat/novo': typeof ChatNovoRoute
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/chat/': typeof ChatIndexRoute
   '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
@@ -128,8 +155,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/chat/$chatId'
+    | '/chat/novo'
     | '/cronograma-obrigatorio/criar'
     | '/sentimentos/criar'
+    | '/chat/'
     | '/cronograma-obrigatorio/'
     | '/relatoDia/'
     | '/sentimentos/'
@@ -141,8 +171,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/chat/$chatId'
+    | '/chat/novo'
     | '/cronograma-obrigatorio/criar'
     | '/sentimentos/criar'
+    | '/chat'
     | '/cronograma-obrigatorio'
     | '/relatoDia'
     | '/sentimentos'
@@ -154,8 +187,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/chat/$chatId'
+    | '/chat/novo'
     | '/cronograma-obrigatorio/criar'
     | '/sentimentos/criar'
+    | '/chat/'
     | '/cronograma-obrigatorio/'
     | '/relatoDia/'
     | '/sentimentos/'
@@ -168,8 +204,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChatChatIdRoute: typeof ChatChatIdRoute
+  ChatNovoRoute: typeof ChatNovoRoute
   CronogramaObrigatorioCriarRoute: typeof CronogramaObrigatorioCriarRoute
   SentimentosCriarRoute: typeof SentimentosCriarRoute
+  ChatIndexRoute: typeof ChatIndexRoute
   CronogramaObrigatorioIndexRoute: typeof CronogramaObrigatorioIndexRoute
   RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
   SentimentosIndexRoute: typeof SentimentosIndexRoute
@@ -187,6 +226,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/': {
+      id: '/chat/'
+      path: '/chat'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof ChatIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$chatId': {
+      id: '/chat/$chatId'
+      path: '/chat/$chatId'
+      fullPath: '/chat/$chatId'
+      preLoaderRoute: typeof ChatChatIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/novo': {
+      id: '/chat/novo'
+      path: '/chat/novo'
+      fullPath: '/chat/novo'
+      preLoaderRoute: typeof ChatNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cronograma-obrigatorio/': {
@@ -264,8 +324,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChatChatIdRoute: ChatChatIdRoute,
+  ChatNovoRoute: ChatNovoRoute,
   CronogramaObrigatorioCriarRoute: CronogramaObrigatorioCriarRoute,
   SentimentosCriarRoute: SentimentosCriarRoute,
+  ChatIndexRoute: ChatIndexRoute,
   CronogramaObrigatorioIndexRoute: CronogramaObrigatorioIndexRoute,
   RelatoDiaIndexRoute: RelatoDiaIndexRoute,
   SentimentosIndexRoute: SentimentosIndexRoute,

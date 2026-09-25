@@ -6,8 +6,9 @@ import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen"; // Gerado automaticamente
 import "./index.css";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./lib/react-query";
 import { ThemeProvider } from "./components/-/theme-provider";
+import { TooltipProvider } from "./components/ui/tooltip";
+import { queryClient } from "./lib/react-query";
 
 const router = createRouter({ routeTree });
 
@@ -26,7 +27,9 @@ ReactDOM.createRoot(rootElement).render(
 	<React.StrictMode>
 		<ThemeProvider defaultTheme="light" storageKey="diario-emocional-theme">
 			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
+				<TooltipProvider>
+					<RouterProvider router={router} />
+				</TooltipProvider>
 			</QueryClientProvider>
 		</ThemeProvider>
 	</React.StrictMode>,
