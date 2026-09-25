@@ -1,16 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import type { AxiosError } from "axios";
 import { criarAvaliacaoSentimento } from "@/api/avaliacao-sentimento/avalicao-sentimento.service";
 import type {
 	AvaliacaoSentimento,
 	AvaliacaoSentimentoInput,
 } from "@/api/avaliacao-sentimento/schema";
-import { Heading } from "@/components/-/typography";
-import { FormEmotion } from "./-components/form";
-import { queryClient } from "@/lib/react-query";
-import { toast } from "@/components/ui/toast";
 import type { ErrorResponse } from "@/api/schemas";
-import type { AxiosError } from "axios";
+import { Heading } from "@/components/-/typography";
+import { toast } from "@/components/ui/toast";
+import { queryClient } from "@/lib/react-query";
+import { FormEmotion } from "./-components/form";
 
 export const Route = createFileRoute("/sentimentos/criar")({
 	component: RouteComponent,
@@ -41,8 +41,13 @@ function RouteComponent() {
 		},
 		onError: (error: AxiosError<ErrorResponse>) => {
 			toast.add({
-				title: error.response?.data?.status && error.response?.data?.error ? `${error.response?.data?.status} - ${error.response?.data?.error}` : "Erro",
-				description: error.response?.data?.message || `Ocorreu um erro ao adicionar a avaliação: ${error}`,
+				title:
+					error.response?.data?.status && error.response?.data?.error
+						? `${error.response?.data?.status} - ${error.response?.data?.error}`
+						: "Erro",
+				description:
+					error.response?.data?.message ||
+					`Ocorreu um erro ao adicionar a avaliação: ${error}`,
 				type: "error",
 			});
 		},
@@ -56,7 +61,7 @@ function RouteComponent() {
 	}
 
 	return (
-		<main className="flex flex-col gap-8 p-4 max-w-270 mx-auto">
+		<main className="flex flex-col gap-8 p-4 max-w-270 w-full mx-auto">
 			<header className="flex flex-col gap-4">
 				<Heading as="h1" variant="h1">
 					{new Date().toLocaleDateString("pt-BR", {
@@ -71,7 +76,11 @@ function RouteComponent() {
 					sentimento.
 				</p>
 			</header>
-			<FormEmotion onSubmit={onSubmit} isPending={isPending} isSuccess={isSuccess} />
+			<FormEmotion
+				onSubmit={onSubmit}
+				isPending={isPending}
+				isSuccess={isSuccess}
+			/>
 		</main>
 	);
 }

@@ -1,40 +1,31 @@
-import { Heading } from '@/components/-/typography';
-import { Button } from '@/components/ui/button';
-
+import { useMutation } from "@tanstack/react-query";
 import {
   createFileRoute,
   useNavigate,
   useParams,
-} from '@tanstack/react-router';
+} from "@tanstack/react-router";
+import { useState } from "react";
+import { CriarRelatoDia } from "@/api/relato-dia/relato-dia.service";
+import type { RelatoDiaCriarRequest } from "@/api/relato-dia/schema";
+import { Heading } from "@/components/-/typography";
+import { Button } from "@/components/ui/button";
+import { RelatoForm } from "../-components/form";
 
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-
-import { RelatoForm } from '../-components/form';
-
-import { CriarRelatoDia } from '@/api/relato-dia/relato-dia.service';
-
-import type { RelatoDiaCriarRequest } from '@/api/relato-dia/schema';
-
-
-export const Route = createFileRoute('/relatoDia/criar/$dataRegistro')({
+export const Route = createFileRoute("/relatoDia/criar/$dataRegistro")({
   component: RouteComponent,
 });
 
-
 function RouteComponent() {
-
   function formatarDataDoJava(dataString: string): string {
-    if (!dataString) return '';
+    if (!dataString) return "";
 
-    const [ano, mes, dia] = dataString.split('-');
+    const [ano, mes, dia] = dataString.split("-");
 
     return `${dia}/${mes}/${ano}`;
   }
 
-
   const { dataRegistro } = useParams({
-    from: Route.id
+    from: Route.id,
   }) as {
     dataRegistro: string;
   };
@@ -43,18 +34,15 @@ function RouteComponent() {
 
   const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
-
   const mutation = useMutation({
-    mutationFn: (dados: RelatoDiaCriarRequest) =>
-      CriarRelatoDia(dados, 1),
+    mutationFn: (dados: RelatoDiaCriarRequest) => CriarRelatoDia(dados, 1),
 
     onSuccess: () => {
       setMostrarSucesso(true);
     },
   });
 
-
-  function handleSubmit(dados: Omit<RelatoDiaCriarRequest, 'dataRegistro'>) {
+  function handleSubmit(dados: Omit<RelatoDiaCriarRequest, "dataRegistro">) {
     console.log("Dados enviados:", dados);
     mutation.mutate({
       dataRegistro,
@@ -64,40 +52,27 @@ function RouteComponent() {
     });
   }
 
-
   function voltarParaRelatos() {
-
     setMostrarSucesso(false);
 
     navigate({
-      to: '/relatoDia',
+      to: "/relatoDia",
     });
   }
 
-
   return (
     <>
-      <main className="flex flex-col gap-8 p-4 max-w-270 mx-auto">
-
+      <main className="flex flex-col gap-8 p-4 max-w-270 w-full mx-auto">
         <Heading as="h1" variant="h1">
           {formatarDataDoJava(dataRegistro)}
         </Heading>
 
-
-        <RelatoForm
-          onSubmit={handleSubmit}
-          isLoading={mutation.isPending}
-        />
-
+        <RelatoForm onSubmit={handleSubmit} isLoading={mutation.isPending} />
 
         {mutation.isError && (
-          <p className="text-red-500">
-            Erro ao criar o relato.
-          </p>
+          <p className="text-red-500">Erro ao criar o relato.</p>
         )}
-
       </main>
-
 
       {mostrarSucesso && (
         <div

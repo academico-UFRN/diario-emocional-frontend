@@ -162,28 +162,22 @@ export const TableAvaliation = () => {
 							<Link
 								className={`border! border-border! ${buttonVariants({
 									variant: "outline",
-									size: "lg",
+									size: "icon-lg",
 								})}`}
 								to={`/sentimentos/$dataRegistro/editar`}
 								params={{ dataRegistro: avaliacao.dataRegistro }}
 							>
 								<HugeiconsIcon icon={Edit} strokeWidth={2} />
-								Editar Avaliação
 							</Link>
 							<DialogDestructive
 								title="Deseja deletar essa avalição?"
 								description="Esta ação não pode ser desfeita."
 								triggerNode={
-									<>
-										<HugeiconsIcon icon={Delete} strokeWidth={2} />
-										Deletar Avaliação
-									</>
+									<HugeiconsIcon icon={Delete} strokeWidth={2} />
 								}
 								confirmNode={
-									<>
-										<HugeiconsIcon icon={Delete} strokeWidth={2} />
-										Deletar Avaliação
-									</>
+									<HugeiconsIcon icon={Delete} strokeWidth={2} />
+
 								}
 								onConfirm={() => handleDelete(avaliacao.dataRegistro)}
 								isPending={mutateDelete.isPending}
