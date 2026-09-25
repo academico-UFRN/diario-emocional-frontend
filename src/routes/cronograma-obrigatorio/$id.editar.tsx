@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
-import { AxiosError } from "axios";
+import type { AxiosError } from "axios";
 import {
+  type EditarCronogramaObrigatorioParams,
   editarCronogramaObrigatorio,
   obterCronogramaObrigatorio,
-  type EditarCronogramaObrigatorioParams,
 } from "@/api/cronograma-obrigatorio/cronograma-obrigatorio.service";
 import type { CronogramaObrigatorioInput } from "@/api/cronograma-obrigatorio/schema";
 import type { ErrorResponse } from "@/api/schemas";
@@ -37,7 +37,9 @@ function RouteComponent() {
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: editarCronogramaObrigatorio,
     onSuccess: async () => {
-      useQueryClient.invalidateQueries({ queryKey: ["cronograma-obrigatorio"] });
+      useQueryClient.invalidateQueries({
+        queryKey: ["cronograma-obrigatorio"],
+      });
       toast.add({
         title: "Sucesso",
         description: "Atividade editada com sucesso.",
@@ -62,7 +64,11 @@ function RouteComponent() {
     },
   });
 
-  const { data, isPending: isQueryPending, isSuccess: isQuerySuccess } = useQuery({
+  const {
+    data,
+    isPending: isQueryPending,
+    isSuccess: isQuerySuccess,
+  } = useQuery({
     queryKey: ["cronograma-obrigatorio", id],
     queryFn: () => obterCronogramaObrigatorio(1, Number(id)),
     staleTime: 1000 * 60 * 5,
@@ -106,7 +112,7 @@ function RouteComponent() {
     };
 
     return (
-      <main className="mx-auto flex max-w-270 flex-col gap-8 p-4">
+      <main className="mx-auto flex max-w-270 w-full flex-col gap-8 p-4">
         <header className="flex flex-col gap-4">
           <Heading as="h1" variant="h1">
             Editar atividade obrigatória

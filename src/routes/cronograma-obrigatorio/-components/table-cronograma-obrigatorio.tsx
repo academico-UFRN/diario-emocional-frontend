@@ -3,12 +3,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import {
-  listarCronogramasObrigatorios,
   deletarCronogramaObrigatorio,
+  listarCronogramasObrigatorios,
 } from "@/api/cronograma-obrigatorio/cronograma-obrigatorio.service";
+import { DialogDestructive } from "@/components/-/dialog-destructive";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { DialogDestructive } from "@/components/-/dialog-destructive";
 import { queryClient } from "@/lib/react-query";
 
 const DIAS_SEMANA: Array<keyof typeof LABEL_DIAS> = [
@@ -73,11 +73,12 @@ function paraMinutos(hora: string): number {
   return horas * 60 + (Number.isNaN(minutos) ? 0 : minutos);
 }
 
-function ordenarAtividadesPorHorario<T extends { horaInicio: string; horaFim: string }>(
-  atividades: T[],
-): T[] {
+function ordenarAtividadesPorHorario<
+  T extends { horaInicio: string; horaFim: string },
+>(atividades: T[]): T[] {
   return [...atividades].sort((a, b) => {
-    const diferencaInicio = paraMinutos(a.horaInicio) - paraMinutos(b.horaInicio);
+    const diferencaInicio =
+      paraMinutos(a.horaInicio) - paraMinutos(b.horaInicio);
 
     if (diferencaInicio !== 0) {
       return diferencaInicio;
@@ -111,14 +112,20 @@ export function TableCronogramaObrigatorio() {
     });
   });
 
-  (Object.keys(tarefasPorDia) as Array<keyof typeof tarefasPorDia>).forEach((diaKey) => {
-    tarefasPorDia[diaKey] = ordenarAtividadesPorHorario(tarefasPorDia[diaKey]);
-  });
+  (Object.keys(tarefasPorDia) as Array<keyof typeof tarefasPorDia>).forEach(
+    (diaKey) => {
+      tarefasPorDia[diaKey] = ordenarAtividadesPorHorario(
+        tarefasPorDia[diaKey],
+      );
+    },
+  );
 
   const mutateDelete = useMutation({
     mutationFn: deletarCronogramaObrigatorio,
     onSuccess: () => {
-      useQueryClient.invalidateQueries({ queryKey: ["cronograma-obrigatorio"] });
+      useQueryClient.invalidateQueries({
+        queryKey: ["cronograma-obrigatorio"],
+      });
     },
   });
 
@@ -137,8 +144,14 @@ export function TableCronogramaObrigatorio() {
   if (cronogramas.length === 0) {
     return (
       <div className="flex h-200 flex-col items-center justify-center gap-4">
-        <HugeiconsIcon icon={Sad01Icon} strokeWidth={2} className="text-muted-foreground" />
-        <p className="text-muted-foreground">Nenhuma atividade obrigatória encontrada.</p>
+        <HugeiconsIcon
+          icon={Sad01Icon}
+          strokeWidth={2}
+          className="text-muted-foreground"
+        />
+        <p className="text-muted-foreground">
+          Nenhuma atividade obrigatória encontrada.
+        </p>
       </div>
     );
   }
@@ -185,9 +198,13 @@ export function TableCronogramaObrigatorio() {
                         className="rounded-md border border-border bg-background p-3 shadow-sm"
                       >
                         <div className="mb-2">
-                          <p className="font-semibold text-foreground">{item.titulo}</p>
+                          <p className="font-semibold text-foreground">
+                            {item.titulo}
+                          </p>
                           {item.subtitulo && (
-                            <p className="text-xs text-muted-foreground">{item.subtitulo}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {item.subtitulo}
+                            </p>
                           )}
                         </div>
 
@@ -204,25 +221,20 @@ export function TableCronogramaObrigatorio() {
                             params={{ id: String(item.id ?? "0") }}
                           >
                             <HugeiconsIcon icon={Edit} strokeWidth={2} />
-                            Editar
                           </Link>
 
                           <DialogDestructive
                             title="Deseja deletar essa atividade?"
                             description="Esta ação não pode ser desfeita."
                             triggerNode={
-                              <>
-                                <HugeiconsIcon icon={Delete} strokeWidth={2} />
-                                Deletar
-                              </>
+                              <HugeiconsIcon icon={Delete} strokeWidth={2} />
                             }
                             confirmNode={
-                              <>
-                                <HugeiconsIcon icon={Delete} strokeWidth={2} />
-                                Deletar
-                              </>
+                              <HugeiconsIcon icon={Delete} strokeWidth={2} />
                             }
-                            onConfirm={() => item.id !== undefined && handleDelete(item.id)}
+                            onConfirm={() =>
+                              item.id !== undefined && handleDelete(item.id)
+                            }
                             isPending={mutateDelete.isPending}
                             isSuccess={mutateDelete.isSuccess}
                           />
@@ -230,7 +242,9 @@ export function TableCronogramaObrigatorio() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">Sem atividade</p>
+                    <p className="text-sm text-muted-foreground">
+                      Sem atividade
+                    </p>
                   )}
                 </div>
               </td>

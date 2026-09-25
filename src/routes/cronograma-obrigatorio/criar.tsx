@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { AxiosError } from "axios";
+import type { AxiosError } from "axios";
 import { criarCronogramaObrigatorio } from "@/api/cronograma-obrigatorio/cronograma-obrigatorio.service";
 import type {
   CronogramaObrigatorio,
@@ -25,7 +25,10 @@ function RouteComponent() {
     onSuccess: (newItem) => {
       useQueryClient.setQueryData<CronogramaObrigatorio[]>(
         ["cronograma-obrigatorio"],
-        (currentItems: CronogramaObrigatorio[] = []) => [newItem, ...currentItems],
+        (currentItems: CronogramaObrigatorio[] = []) => [
+          newItem,
+          ...currentItems,
+        ],
       );
 
       toast.add({
@@ -60,14 +63,15 @@ function RouteComponent() {
   }
 
   return (
-    <main className="mx-auto flex max-w-270 flex-col gap-8 p-4">
+    <main className="mx-auto flex max-w-270 w-full flex-col gap-8 p-4">
       <header className="flex flex-col gap-4">
         <Heading as="h1" variant="h1">
           Nova atividade obrigatória
         </Heading>
 
         <p>
-          Cadastre uma tarefa recorrente com horário e dias específicos da semana.
+          Cadastre uma tarefa recorrente com horário e dias específicos da
+          semana.
         </p>
       </header>
 
