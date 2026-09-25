@@ -1,6 +1,5 @@
-import type { AxiosResponse } from "axios";
 import { api } from "../axios";
-import { LembreteSchema, type Lembrete } from "./schema";
+import { type Lembrete, LembreteSchema } from "./schema";
 
 function extrairLembrete(payload: unknown): unknown {
 	if (Array.isArray(payload)) {
@@ -43,7 +42,7 @@ export const buscarLembreteNaoEnviado = async (): Promise<Lembrete | null> => {
 		return null;
 	}
 
-	if (!parsed.data || !parsed.data.tipoLembrete || !parsed.data.hora) {
+	if (!parsed.data?.tipoLembrete || !parsed.data.hora) {
 		console.warn("Lembrete inválido para notificação, ignorando:", parsed.data);
 		return null;
 	}

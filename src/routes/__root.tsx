@@ -18,22 +18,22 @@ export const Route = createRootRoute({
           </Link>
           <Link to="/relatoDia" className="group flex flex-col relative p-0">
             Relato do dia
-            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
+            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
           </Link>
           <Link to="/sentimentos" className="group flex flex-col relative p-0">
             Avaliação de sentimentos
-            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
+            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
           </Link>
           <Link
             to="/cronograma-obrigatorio"
             className="group flex flex-col relative p-0"
           >
             Cronograma obrigatório
-            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
+            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
           </Link>
           <Link to="/chat" className="group flex flex-col relative p-0">
             Método Socrático
-            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute bottom-[-15px]"></div>
+            <div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
           </Link>
         </nav>
 
