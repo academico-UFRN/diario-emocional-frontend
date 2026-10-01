@@ -19,6 +19,7 @@ export const Chat = () => {
         mutationFn: criarChat,
         onSuccess: (chat: ChatResponse) => {
             queryClient.setQueryData(["chat", chat.id], chat);
+            queryClient.invalidateQueries({ queryKey: ["listarChats"] });
             navigate({
                 to: "/chat/$chatId",
                 params: { chatId: chat.id },
