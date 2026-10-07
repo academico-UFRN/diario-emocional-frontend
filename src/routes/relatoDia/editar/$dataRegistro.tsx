@@ -10,6 +10,7 @@ import {
   EditarRelatoDia,
 } from "@/api/relato-dia/relato-dia.service";
 import type { RelatoDiaEditarDto } from "@/api/relato-dia/schema";
+import { obterUsuarioId } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { RelatoForm } from "../-components/form";
 
@@ -28,6 +29,7 @@ export function RouteComponent() {
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const usuarioId = obterUsuarioId();
 
   // 1. Pega os parâmetros da URL
   const { dataRegistro } = useParams({
@@ -39,13 +41,13 @@ export function RouteComponent() {
   // 2. Busca o relato no backend
   const { data: relato, isLoading } = useQuery({
     queryKey: ["relatoDia", dataRegistro],
-    queryFn: () => BuscarRelatoDia(dataRegistro, 1),
+    queryFn: () => BuscarRelatoDia(dataRegistro, usuarioId),
   });
 
   // 3. Cria a mutation para salvar as alterações
   const mutation = useMutation({
     mutationFn: (dadosAtualizados: RelatoDiaEditarDto) =>
-      EditarRelatoDia(dataRegistro, 1, dadosAtualizados),
+      EditarRelatoDia(dataRegistro, usuarioId, dadosAtualizados),
     onSuccess: () => {
       // Invalida o cache para atualizar a lista
       queryClient.invalidateQueries({ queryKey: ["relatoDia"] });

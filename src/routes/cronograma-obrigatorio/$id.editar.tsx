@@ -12,6 +12,7 @@ import { Heading } from "@/components/-/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
 import { queryClient } from "@/lib/react-query";
+import { obterUsuarioId } from "@/lib/auth";
 import { FormCronogramaObrigatorio } from "./-components/form";
 
 export const Route = createFileRoute("/cronograma-obrigatorio/$id/editar")({
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/cronograma-obrigatorio/$id/editar")({
 
 function RouteComponent() {
   const useQueryClient = queryClient;
+  const usuarioId = obterUsuarioId();
   const { id } = Route.useLoaderData();
   const navigate = useNavigate();
 
@@ -70,13 +72,13 @@ function RouteComponent() {
     isSuccess: isQuerySuccess,
   } = useQuery({
     queryKey: ["cronograma-obrigatorio", id],
-    queryFn: () => obterCronogramaObrigatorio(1, Number(id)),
+    queryFn: () => obterCronogramaObrigatorio(usuarioId, Number(id)),
     staleTime: 1000 * 60 * 5,
   });
 
   function onSubmit(dados: CronogramaObrigatorioInput) {
     const payload: EditarCronogramaObrigatorioParams = {
-      usuarioId: 1,
+      usuarioId,
       id: Number(id),
       dados,
     };

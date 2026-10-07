@@ -6,6 +6,7 @@ import type { ChatResponse } from "@/api/chat/schema";
 import { Heading } from "@/components/-/typography";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { toast } from "@/components/ui/toast";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import { InputChat } from "./chat-input-bar";
 import { ChatScroller } from "./chat-scroller";
@@ -37,7 +38,7 @@ export const Chat = () => {
 
     function onSubmit(mensagem: string) {
         setMensagemInicial(mensagem);
-        criarMensagem({ usuarioId: 1, dados: { mensagem } });
+        criarMensagem({ usuarioId: obterUsuarioId(), dados: { mensagem } });
     }
 
     return (

@@ -11,6 +11,7 @@ import type { ErrorResponse } from "@/api/schemas";
 import { Heading } from "@/components/-/typography";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import { FormEmotion } from "./-components/form";
 import { FormSkeleton } from "./-components/skeleton-form";
@@ -33,6 +34,7 @@ function RouteComponent() {
 	const useQueryClient = queryClient;
 	const { dataRegistro } = Route.useLoaderData();
 	const navigate = useNavigate();
+	const usuarioId = obterUsuarioId();
 
 	const { mutate, isPending, isSuccess } = useMutation({
 		mutationFn: editarAvaliacaoSentimento,
@@ -69,14 +71,14 @@ function RouteComponent() {
 		isSuccess: isQuerySuccess,
 		isPending: isQueryPending,
 	} = useQuery({
-		queryKey: ["avalicao-sentimento"],
-		queryFn: () => obterAvaliacaoSentimento(1, dataRegistro),
+		queryKey: ["avalicao-sentimento", usuarioId, dataRegistro],
+		queryFn: () => obterAvaliacaoSentimento(usuarioId, dataRegistro),
 		staleTime: 1000 * 60 * 5,
 	});
 
 	function onSubmit(dados: AvaliacaoSentimentoInput) {
 		const dataEditar: EditarAvaliacaoParams = {
-			usuarioId: 1,
+			usuarioId,
 			dataRegistro,
 			dados,
 		};

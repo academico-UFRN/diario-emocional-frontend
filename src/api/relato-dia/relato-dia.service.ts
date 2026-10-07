@@ -59,7 +59,14 @@ export const DeletarRelatoDia = async (
 	await api.delete(`/relato/deletar/${usuarioId}/${dataRegistro}`);
 };
 
-export const BuscarSugestaoRelatoDia = async (usuarioId: number) => {
-   const response = await api.get(`/relato/IA-sugestao/${usuarioId}`);
-   return response.data;
+export const BuscarSugestaoRelatoDia = async (
+	usuarioId: number,
+): Promise<string> => {
+	const response = await api.get<string>(`/relato/IA-sugestao/${usuarioId}`);
+
+	if (response.status !== 200) {
+		throw new Error(`Resposta da sugestão não foi OK (HTTP ${response.status}).`);
+	}
+
+	return response.data;
 }
