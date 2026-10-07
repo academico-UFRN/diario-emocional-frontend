@@ -10,6 +10,7 @@ import { DialogDestructive } from "@/components/-/dialog-destructive";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { queryClient } from "@/lib/react-query";
+import { obterUsuarioId } from "@/lib/auth";
 
 const DIAS_SEMANA: Array<keyof typeof LABEL_DIAS> = [
   "SEGUNDA",
@@ -90,10 +91,12 @@ function ordenarAtividadesPorHorario<
 
 export function TableCronogramaObrigatorio() {
   const useQueryClient = queryClient;
+  const usuarioId = obterUsuarioId();
 
   const { data, isPending } = useQuery({
     queryKey: ["cronograma-obrigatorio"],
-    queryFn: () => listarCronogramasObrigatorios(1),
+    queryKey: ["cronograma-obrigatorio", usuarioId],
+    queryFn: () => listarCronogramasObrigatorios(usuarioId),
     staleTime: 1000 * 60 * 5,
   });
 
@@ -124,13 +127,13 @@ export function TableCronogramaObrigatorio() {
     mutationFn: deletarCronogramaObrigatorio,
     onSuccess: () => {
       useQueryClient.invalidateQueries({
-        queryKey: ["cronograma-obrigatorio"],
+        queryKey: ["cronograma-obrigatorio", usuarioId],
       });
     },
   });
 
   function handleDelete(id: number): void {
-    mutateDelete.mutate({ usuarioId: 1, id });
+    mutateDelete.mutate({ usuarioId, id });
   }
 
   if (isPending) {

@@ -7,6 +7,7 @@ import type { ErrorResponse } from "@/api/schemas";
 import { Heading } from "@/components/-/typography";
 import { buttonVariants } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import { HigieneSonoForm } from "./-components/form";
 
@@ -16,11 +17,12 @@ export const Route = createFileRoute("/higieneSono/criar")({
 
 function CriarHigieneSonoPage() {
 	const navigate = useNavigate();
+	const usuarioId = obterUsuarioId();
 	const mutation = useMutation({
 		mutationFn: (dados: RelatoHigieneSonoRequest) =>
-			criarRelatoHigieneSono(1, dados),
+			criarRelatoHigieneSono(usuarioId, dados),
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: ["higiene-sono", 1] });
+			await queryClient.invalidateQueries({ queryKey: ["higiene-sono", usuarioId] });
 			toast.add({
 				title: "Registro salvo",
 				description: "Seu relato de higiene do sono foi adicionado.",

@@ -18,14 +18,16 @@ import {
 } from "@/components/ui/sidebar";
 import { Spinner } from "@/components/ui/spinner";
 import { queryClient } from "@/lib/react-query";
+import { obterUsuarioId } from "@/lib/auth";
 
 export const SidebarChat = () => {
     const useQueryClient = queryClient;
+    const usuarioId = obterUsuarioId();
     const [deletingChatId, setDeletingChatId] = useState<string | null>(null);
 
     const { data, isPending } = useQuery({
-        queryKey: ["listarChats"],
-        queryFn: () => listarChats({ usuarioId: 1 }),
+        queryKey: ["listarChats", usuarioId],
+        queryFn: () => listarChats({ usuarioId }),
         staleTime: 1000 * 60 * 5, // 5 minutos
     });
 

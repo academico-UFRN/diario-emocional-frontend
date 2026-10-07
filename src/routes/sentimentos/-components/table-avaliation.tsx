@@ -18,6 +18,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { formatarDataFeed } from "@/lib/date-fns";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import {
 	FREQUENCY_LABELS,
@@ -28,10 +29,11 @@ import { CardSkeleton } from "./skeleton-card";
 
 export const TableAvaliation = () => {
 	const useQueryClient = queryClient;
+	const usuarioId = obterUsuarioId();
 
 	const { data, isPending } = useQuery({
-		queryKey: ["feelings"],
-		queryFn: () => listarAvaliacoesSentimento(1),
+		queryKey: ["feelings", usuarioId],
+		queryFn: () => listarAvaliacoesSentimento(usuarioId),
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 
@@ -43,7 +45,7 @@ export const TableAvaliation = () => {
 	});
 
 	function handleDelete(dataRegistro: string): void {
-		mutateDelete.mutate({ usuarioId: 1, dataRegistro });
+		mutateDelete.mutate({ usuarioId, dataRegistro });
 	}
 
 	if (isPending) {
@@ -113,9 +115,6 @@ export const TableAvaliation = () => {
 										(item) => item.id === sentimento.sentimento,
 									);
 									if (!feeling) {
-										console.warn(
-											`Sentimento com id "${sentimento.sentimento}" não encontrado em especificFeelingsToChoose.`,
-										);
 										return null;
 									}
 									return (
@@ -142,9 +141,6 @@ export const TableAvaliation = () => {
 										(item) => item.id === gatilho,
 									);
 									if (!gatilhoData) {
-										console.warn(
-											`Gatilho com id "${gatilho}" não encontrado em GATILHOS.`,
-										);
 										return null;
 									}
 

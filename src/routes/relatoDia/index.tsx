@@ -4,11 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   BuscarSugestaoRelatoDia,
   ListarRelatosDia,
 } from "@/api/relato-dia/relato-dia.service";
 import { Heading } from "@/components/-/typography";
+import { obterUsuarioId } from "@/lib/auth";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -32,42 +34,75 @@ function formatarDataDoJava(dataString: string): string {
 }
 
 function RouteComponent() {
+  const usuarioId = obterUsuarioId();
   const [sugestao, setSugestao] = useState<string | null>(null);
+  const [erroSugestao, setErroSugestao] = useState<string | null>(null);
 
   useEffect(() => {
     const hoje = new Date().toISOString().split("T")[0];
 
-    const sugestaoSalva = localStorage.getItem("sugestaoRelatoDia");
+    const chaveSugestao = `sugestaoRelatoDia-${usuarioId}`;
+    const sugestaoSalva = localStorage.getItem(chaveSugestao);
 
     if (sugestaoSalva) {
-      const dados = JSON.parse(sugestaoSalva);
+      try {
+        const dados: unknown = JSON.parse(sugestaoSalva);
 
-      if (dados.data === hoje) {
-        setSugestao(dados.sugestao);
-        return;
+        if (
+          dados &&
+          typeof dados === "object" &&
+          "data" in dados &&
+          "sugestao" in dados &&
+          "statusCode" in dados &&
+          dados.data === hoje &&
+          typeof dados.sugestao === "string" &&
+          dados.sugestao.trim() &&
+          dados.statusCode === 200
+        ) {
+          setSugestao(dados.sugestao);
+          return;
+        }
+
+        localStorage.removeItem(chaveSugestao);
+      } catch {
+        localStorage.removeItem(chaveSugestao);
       }
     }
 
-    BuscarSugestaoRelatoDia(1)
+    console.log("Requisição de sugestão do relato do dia:", { usuarioId });
+
+    BuscarSugestaoRelatoDia(usuarioId)
       .then((response) => {
-        console.log("Sugestão recebida:", response.sugestao);
+        const textoSugestao = response.trim();
+
+        if (!textoSugestao) {
+          setErroSugestao("O servidor respondeu sem conteúdo para a sugestão.");
+          return;
+        }
+
         const dados = {
-          sugestao: response.sugestao,
+          sugestao: textoSugestao,
           data: hoje,
+          statusCode: 200,
         };
 
-        localStorage.setItem("sugestaoRelatoDia", JSON.stringify(dados));
+        localStorage.setItem(chaveSugestao, JSON.stringify(dados));
 
-        setSugestao(response.sugestao);
+        setSugestao(textoSugestao);
       })
-      .catch((error) => {
-        console.error("Erro ao buscar sugestão:", error);
+      .catch((error: unknown) => {
+        setSugestao(null);
+        setErroSugestao(null);
+
+        if (import.meta.env.DEV) {
+          console.error("Erro ao buscar sugestão do relato do dia:", error);
+        }
       });
-  }, []);
+  }, [usuarioId]);
 
   const { data } = useQuery({
-    queryKey: ["relatoDia", 1],
-    queryFn: () => ListarRelatosDia(1),
+    queryKey: ["relatoDia", usuarioId],
+    queryFn: () => ListarRelatosDia(usuarioId),
   });
 
   const hoje = new Date();
@@ -113,6 +148,11 @@ function RouteComponent() {
           </CardFooter>
         </Card>
       )}
+      {erroSugestao && (
+        <p role="alert" className="rounded-md border border-destructive/40 p-3 text-sm text-destructive">
+          {erroSugestao}
+        </p>
+      )}
 
       <div className="grid grid-cols-2 gap-4">
         {data?.map((relato) => (
@@ -148,7 +188,7 @@ function RouteComponent() {
                 </Link>
               </Button>
 
-              <ExcluirRelato dataRegistro={relato.dataRegistro} usuarioId={1} />
+              <ExcluirRelato dataRegistro={relato.dataRegistro} usuarioId={usuarioId} />
             </CardFooter>
           </Card>
         ))}
