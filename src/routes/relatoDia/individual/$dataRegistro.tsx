@@ -6,6 +6,7 @@ import { Heart } from "lucide-react";
 import { BuscarRelatoDia } from "@/api/relato-dia/relato-dia.service";
 import { Heading } from "@/components/-/typography";
 import { Button } from "@/components/ui/button";
+import { obterUsuarioId } from "@/lib/auth";
 import { ExcluirRelato } from "../-components/excluir-relato";
 
 export const Route = createFileRoute("/relatoDia/individual/$dataRegistro")({
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/relatoDia/individual/$dataRegistro")({
 });
 
 function RouteComponent() {
+  const usuarioId = obterUsuarioId();
   const { dataRegistro } = useParams({ from: Route.id }) as {
     dataRegistro: string;
   };
@@ -34,8 +36,8 @@ function RouteComponent() {
   }
 
   const { data } = useQuery({
-    queryKey: ["relatoDia", dataRegistro, 1],
-    queryFn: () => BuscarRelatoDia(dataRegistro, 1),
+    queryKey: ["relatoDia", dataRegistro, usuarioId],
+    queryFn: () => BuscarRelatoDia(dataRegistro, usuarioId),
   });
 
   return (
@@ -70,7 +72,7 @@ function RouteComponent() {
           </Button>
           <ExcluirRelato
             dataRegistro={formatarDataDoJava(String(data?.dataRegistro))}
-            usuarioId={1}
+            usuarioId={usuarioId}
           />
         </div>
       </header>

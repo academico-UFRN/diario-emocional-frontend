@@ -9,6 +9,7 @@ import type {
 import type { ErrorResponse } from "@/api/schemas";
 import { Heading } from "@/components/-/typography";
 import { toast } from "@/components/ui/toast";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import { FormEmotion } from "./-components/form";
 
@@ -19,12 +20,13 @@ export const Route = createFileRoute("/sentimentos/criar")({
 function RouteComponent() {
 	const useQueryClient = queryClient;
 	const navigate = useNavigate();
+	const usuarioId = obterUsuarioId();
 
 	const { mutate, isPending, isSuccess } = useMutation({
 		mutationFn: criarAvaliacaoSentimento,
 		onSuccess: (newEvaluation) => {
 			useQueryClient.setQueryData<AvaliacaoSentimento[]>(
-				["feelings"],
+				["feelings", usuarioId],
 				(currentEvaluations: AvaliacaoSentimento[] = []) => [
 					newEvaluation,
 					...currentEvaluations,
@@ -57,7 +59,7 @@ function RouteComponent() {
 
 	function onSubmit(dados: AvaliacaoSentimentoInput) {
 		mutate({
-			usuarioId: 1,
+			usuarioId,
 			dados,
 		});
 	}

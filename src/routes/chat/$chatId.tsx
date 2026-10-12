@@ -7,6 +7,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
 import { queryClient } from "@/lib/react-query";
+import { obterUsuarioId } from "@/lib/auth";
 import { InputChat } from "./-components/chat-input-bar";
 import { ChatScroller } from "./-components/chat-scroller";
 import { SidebarChat } from "./-components/sidebar-chat";
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/chat/$chatId")({
 
 function RouteComponent() {
   const useQueryClient = queryClient;
+  const usuarioId = obterUsuarioId();
 
   const { chatId } = Route.useLoaderData();
   const [tempChatId, setTempChatId] = useState<string>(`temp-id-${Date.now()}`);
@@ -102,7 +104,7 @@ function RouteComponent() {
       },
     );
 
-    enviarMensagem({ usuarioId: 1, dados: { mensagem }, chatId: chatId });
+    enviarMensagem({ usuarioId, dados: { mensagem }, chatId: chatId });
   }
 
   return (

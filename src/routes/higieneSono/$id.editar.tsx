@@ -11,6 +11,7 @@ import { Heading } from "@/components/-/typography";
 import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 import { HigieneSonoForm } from "./-components/form";
 
@@ -22,18 +23,19 @@ function EditarHigieneSonoPage() {
 	const { id: idParam } = Route.useParams();
 	const id = Number(idParam);
 	const navigate = useNavigate();
+	const usuarioId = obterUsuarioId();
 
 	const { data, isPending, isError, error } = useQuery({
-		queryKey: ["higiene-sono", 1, id],
-		queryFn: () => buscarRelatoHigieneSono(1, id),
+		queryKey: ["higiene-sono", usuarioId, id],
+		queryFn: () => buscarRelatoHigieneSono(usuarioId, id),
 		enabled: Number.isInteger(id) && id > 0,
 	});
 
 	const mutation = useMutation({
 		mutationFn: (dados: RelatoHigieneSonoRequest) =>
-			editarRelatoHigieneSono(1, id, dados),
+			editarRelatoHigieneSono(usuarioId, id, dados),
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: ["higiene-sono", 1] });
+			await queryClient.invalidateQueries({ queryKey: ["higiene-sono", usuarioId] });
 			toast.add({
 				title: "Registro atualizado",
 				description: "As alterações foram salvas.",

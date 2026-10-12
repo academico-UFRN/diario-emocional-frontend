@@ -38,30 +38,24 @@ export function LembreteWatcher() {
     let desmontado = false;
 
     const buscarLembrete = async () => {
-      console.log("[LembreteWatcher] Verificando lembrete em:", new Date().toLocaleTimeString("pt-BR"));
-
       try {
         const lembrete = await buscarLembreteNaoEnviado();
-        console.log("[LembreteWatcher] Resposta recebida:", lembrete);
 
         if (
           desmontado ||
           !lembrete ||
           ultimoLembreteExibido.current === chaveLembrete(lembrete)
         ) {
-          console.log("[LembreteWatcher] Nenhum lembrete novo para exibir.");
           return;
         }
 
         ultimoLembreteExibido.current = chaveLembrete(lembrete);
-        console.info("[LembreteWatcher] Exibindo lembrete na tela:", lembrete);
         toast.add({
           title: "Lembrete",
           description: mensagemLembrete(lembrete),
           type: "info",
         });
-      } catch (error) {
-        console.error("[LembreteWatcher] Erro ao buscar lembrete não enviado:", error);
+      } catch {
       }
     };
 
