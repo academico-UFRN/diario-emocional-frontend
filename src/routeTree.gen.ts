@@ -20,6 +20,8 @@ import { Route as HigieneSonoCriarRouteImport } from './routes/higieneSono/criar
 import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
 import { Route as SentimentosIndexRouteImport } from './routes/sentimentos/index'
 import { Route as SentimentosCriarRouteImport } from './routes/sentimentos/criar'
+import { Route as SugestoesSaudeMentalIndexRouteImport } from './routes/sugestoes-saude-mental/index'
+import { Route as SugestoesSaudeMentalSolicitacaoIdRouteImport } from './routes/sugestoes-saude-mental/$solicitacaoId'
 import { Route as UsuarioIndexRouteImport } from './routes/usuario/index'
 import { Route as CronogramaObrigatorioIdEditarRouteImport } from './routes/cronograma-obrigatorio/$id.editar'
 import { Route as HigieneSonoIdEditarRouteImport } from './routes/higieneSono/$id.editar'
@@ -85,6 +87,18 @@ const SentimentosCriarRoute = SentimentosCriarRouteImport.update({
   path: '/sentimentos/criar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SugestoesSaudeMentalIndexRoute =
+  SugestoesSaudeMentalIndexRouteImport.update({
+    id: '/sugestoes-saude-mental/',
+    path: '/sugestoes-saude-mental/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SugestoesSaudeMentalSolicitacaoIdRoute =
+  SugestoesSaudeMentalSolicitacaoIdRouteImport.update({
+    id: '/sugestoes-saude-mental/$solicitacaoId',
+    path: '/sugestoes-saude-mental/$solicitacaoId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const UsuarioIndexRoute = UsuarioIndexRouteImport.update({
   id: '/usuario/',
   path: '/usuario/',
@@ -133,11 +147,13 @@ export interface FileRoutesByFullPath {
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/higieneSono/criar': typeof HigieneSonoCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/sugestoes-saude-mental/$solicitacaoId': typeof SugestoesSaudeMentalSolicitacaoIdRoute
   '/chat/': typeof ChatIndexRoute
   '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/higieneSono/': typeof HigieneSonoIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
+  '/sugestoes-saude-mental/': typeof SugestoesSaudeMentalIndexRoute
   '/usuario/': typeof UsuarioIndexRoute
   '/cronograma-obrigatorio/$id/editar': typeof CronogramaObrigatorioIdEditarRoute
   '/higieneSono/$id/editar': typeof HigieneSonoIdEditarRoute
@@ -153,11 +169,13 @@ export interface FileRoutesByTo {
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/higieneSono/criar': typeof HigieneSonoCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/sugestoes-saude-mental/$solicitacaoId': typeof SugestoesSaudeMentalSolicitacaoIdRoute
   '/chat': typeof ChatIndexRoute
   '/cronograma-obrigatorio': typeof CronogramaObrigatorioIndexRoute
   '/higieneSono': typeof HigieneSonoIndexRoute
   '/relatoDia': typeof RelatoDiaIndexRoute
   '/sentimentos': typeof SentimentosIndexRoute
+  '/sugestoes-saude-mental': typeof SugestoesSaudeMentalIndexRoute
   '/usuario': typeof UsuarioIndexRoute
   '/cronograma-obrigatorio/$id/editar': typeof CronogramaObrigatorioIdEditarRoute
   '/higieneSono/$id/editar': typeof HigieneSonoIdEditarRoute
@@ -174,11 +192,13 @@ export interface FileRoutesById {
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/higieneSono/criar': typeof HigieneSonoCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
+  '/sugestoes-saude-mental/$solicitacaoId': typeof SugestoesSaudeMentalSolicitacaoIdRoute
   '/chat/': typeof ChatIndexRoute
   '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/higieneSono/': typeof HigieneSonoIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
+  '/sugestoes-saude-mental/': typeof SugestoesSaudeMentalIndexRoute
   '/usuario/': typeof UsuarioIndexRoute
   '/cronograma-obrigatorio/$id/editar': typeof CronogramaObrigatorioIdEditarRoute
   '/higieneSono/$id/editar': typeof HigieneSonoIdEditarRoute
@@ -196,11 +216,13 @@ export interface FileRouteTypes {
     | '/cronograma-obrigatorio/criar'
     | '/higieneSono/criar'
     | '/sentimentos/criar'
+    | '/sugestoes-saude-mental/$solicitacaoId'
     | '/chat/'
     | '/cronograma-obrigatorio/'
     | '/higieneSono/'
     | '/relatoDia/'
     | '/sentimentos/'
+    | '/sugestoes-saude-mental/'
     | '/usuario/'
     | '/cronograma-obrigatorio/$id/editar'
     | '/higieneSono/$id/editar'
@@ -216,11 +238,13 @@ export interface FileRouteTypes {
     | '/cronograma-obrigatorio/criar'
     | '/higieneSono/criar'
     | '/sentimentos/criar'
+    | '/sugestoes-saude-mental/$solicitacaoId'
     | '/chat'
     | '/cronograma-obrigatorio'
     | '/higieneSono'
     | '/relatoDia'
     | '/sentimentos'
+    | '/sugestoes-saude-mental'
     | '/usuario'
     | '/cronograma-obrigatorio/$id/editar'
     | '/higieneSono/$id/editar'
@@ -236,11 +260,13 @@ export interface FileRouteTypes {
     | '/cronograma-obrigatorio/criar'
     | '/higieneSono/criar'
     | '/sentimentos/criar'
+    | '/sugestoes-saude-mental/$solicitacaoId'
     | '/chat/'
     | '/cronograma-obrigatorio/'
     | '/higieneSono/'
     | '/relatoDia/'
     | '/sentimentos/'
+    | '/sugestoes-saude-mental/'
     | '/usuario/'
     | '/cronograma-obrigatorio/$id/editar'
     | '/higieneSono/$id/editar'
@@ -257,11 +283,13 @@ export interface RootRouteChildren {
   CronogramaObrigatorioCriarRoute: typeof CronogramaObrigatorioCriarRoute
   HigieneSonoCriarRoute: typeof HigieneSonoCriarRoute
   SentimentosCriarRoute: typeof SentimentosCriarRoute
+  SugestoesSaudeMentalSolicitacaoIdRoute: typeof SugestoesSaudeMentalSolicitacaoIdRoute
   ChatIndexRoute: typeof ChatIndexRoute
   CronogramaObrigatorioIndexRoute: typeof CronogramaObrigatorioIndexRoute
   HigieneSonoIndexRoute: typeof HigieneSonoIndexRoute
   RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
   SentimentosIndexRoute: typeof SentimentosIndexRoute
+  SugestoesSaudeMentalIndexRoute: typeof SugestoesSaudeMentalIndexRoute
   UsuarioIndexRoute: typeof UsuarioIndexRoute
   CronogramaObrigatorioIdEditarRoute: typeof CronogramaObrigatorioIdEditarRoute
   HigieneSonoIdEditarRoute: typeof HigieneSonoIdEditarRoute
@@ -350,6 +378,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SentimentosCriarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sugestoes-saude-mental/': {
+      id: '/sugestoes-saude-mental/'
+      path: '/sugestoes-saude-mental'
+      fullPath: '/sugestoes-saude-mental/'
+      preLoaderRoute: typeof SugestoesSaudeMentalIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sugestoes-saude-mental/$solicitacaoId': {
+      id: '/sugestoes-saude-mental/$solicitacaoId'
+      path: '/sugestoes-saude-mental/$solicitacaoId'
+      fullPath: '/sugestoes-saude-mental/$solicitacaoId'
+      preLoaderRoute: typeof SugestoesSaudeMentalSolicitacaoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/usuario/': {
       id: '/usuario/'
       path: '/usuario'
@@ -409,11 +451,14 @@ const rootRouteChildren: RootRouteChildren = {
   CronogramaObrigatorioCriarRoute: CronogramaObrigatorioCriarRoute,
   HigieneSonoCriarRoute: HigieneSonoCriarRoute,
   SentimentosCriarRoute: SentimentosCriarRoute,
+  SugestoesSaudeMentalSolicitacaoIdRoute:
+    SugestoesSaudeMentalSolicitacaoIdRoute,
   ChatIndexRoute: ChatIndexRoute,
   CronogramaObrigatorioIndexRoute: CronogramaObrigatorioIndexRoute,
   HigieneSonoIndexRoute: HigieneSonoIndexRoute,
   RelatoDiaIndexRoute: RelatoDiaIndexRoute,
   SentimentosIndexRoute: SentimentosIndexRoute,
+  SugestoesSaudeMentalIndexRoute: SugestoesSaudeMentalIndexRoute,
   UsuarioIndexRoute: UsuarioIndexRoute,
   CronogramaObrigatorioIdEditarRoute: CronogramaObrigatorioIdEditarRoute,
   HigieneSonoIdEditarRoute: HigieneSonoIdEditarRoute,

@@ -66,6 +66,13 @@ function RootComponent() {
 						Método Socrático
 						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
 					</Link>
+					<Link
+						to="/sugestoes-saude-mental"
+						className="group flex flex-col relative p-0"
+					>
+						Sugestões de saúde mental
+						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
+					</Link>
 					<Link to="/usuario" className="group flex flex-col relative p-0">
 						Usuário
 						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
