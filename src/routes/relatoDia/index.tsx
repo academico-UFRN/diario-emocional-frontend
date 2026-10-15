@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import {
   BuscarSugestaoRelatoDia,
   ListarRelatosDia,

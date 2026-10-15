@@ -94,7 +94,6 @@ export function TableCronogramaObrigatorio() {
   const usuarioId = obterUsuarioId();
 
   const { data, isPending } = useQuery({
-    queryKey: ["cronograma-obrigatorio"],
     queryKey: ["cronograma-obrigatorio", usuarioId],
     queryFn: () => listarCronogramasObrigatorios(usuarioId),
     staleTime: 1000 * 60 * 5,
