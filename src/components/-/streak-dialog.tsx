@@ -28,6 +28,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { obterUsuarioIdSalvo } from "@/lib/auth";
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
 
@@ -188,13 +189,20 @@ function StreakStatBlock({
 	);
 }
 
-export function StreakDialog({ usuarioId = 1 }: { usuarioId?: number }) {
+export function StreakDialog({ usuarioId: usuarioIdProp }: { usuarioId?: number } = {}) {
+	const usuarioId = usuarioIdProp ?? (obterUsuarioIdSalvo() ?? undefined);
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
 
 	const { data: streakData, isPending } = useQuery({
 		queryKey: ["streak-period", usuarioId],
-		queryFn: () => buscarStreakPeriod(usuarioId),
+		queryFn: () => {
+			if (!usuarioId) {
+				throw new Error("Usuário não autenticado");
+			}
+			return buscarStreakPeriod(usuarioId);
+		},
+		enabled: !!usuarioId,
 	});
 
 	const hoje = useMemo(() => {

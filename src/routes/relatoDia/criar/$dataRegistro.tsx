@@ -9,6 +9,7 @@ import { CriarRelatoDia } from "@/api/relato-dia/relato-dia.service";
 import type { RelatoDiaCriarRequest } from "@/api/relato-dia/schema";
 import { Heading } from "@/components/-/typography";
 import { Button } from "@/components/ui/button";
+import { obterUsuarioId } from "@/lib/auth";
 import { RelatoForm } from "../-components/form";
 
 export const Route = createFileRoute("/relatoDia/criar/$dataRegistro")({
@@ -32,11 +33,12 @@ function RouteComponent() {
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const usuarioId = obterUsuarioId();
 
   const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: (dados: RelatoDiaCriarRequest) => CriarRelatoDia(dados, 1),
+    mutationFn: (dados: RelatoDiaCriarRequest) => CriarRelatoDia(dados, usuarioId),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["relatoDia"] });
@@ -46,7 +48,6 @@ function RouteComponent() {
   });
 
   function handleSubmit(dados: Omit<RelatoDiaCriarRequest, "dataRegistro">) {
-    console.log("Dados enviados:", dados);
     mutation.mutate({
       dataRegistro,
       titulo: dados.titulo,

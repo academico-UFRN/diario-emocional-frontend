@@ -10,6 +10,7 @@ import type { ErrorResponse } from "@/api/schemas";
 import { Heading } from "@/components/-/typography";
 import { toast } from "@/components/ui/toast";
 import { queryClient } from "@/lib/react-query";
+import { obterUsuarioId } from "@/lib/auth";
 import { FormCronogramaObrigatorio } from "./-components/form";
 
 export const Route = createFileRoute("/cronograma-obrigatorio/criar")({
@@ -19,12 +20,13 @@ export const Route = createFileRoute("/cronograma-obrigatorio/criar")({
 function RouteComponent() {
   const navigate = useNavigate();
   const useQueryClient = queryClient;
+  const usuarioId = obterUsuarioId();
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: criarCronogramaObrigatorio,
     onSuccess: (newItem) => {
       useQueryClient.setQueryData<CronogramaObrigatorio[]>(
-        ["cronograma-obrigatorio"],
+        ["cronograma-obrigatorio", usuarioId],
         (currentItems: CronogramaObrigatorio[] = []) => [
           newItem,
           ...currentItems,
@@ -57,7 +59,7 @@ function RouteComponent() {
 
   function onSubmit(dados: CronogramaObrigatorioInput) {
     mutate({
-      usuarioId: 1,
+      usuarioId,
       dados,
     });
   }

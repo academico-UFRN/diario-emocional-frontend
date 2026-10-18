@@ -13,6 +13,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/toast";
+import { obterUsuarioId } from "@/lib/auth";
 import { queryClient } from "@/lib/react-query";
 
 export const Route = createFileRoute("/higieneSono/")({
@@ -49,15 +50,16 @@ function formatarDuracao(minutos: number) {
 }
 
 function HigieneSonoPage() {
+	const usuarioId = obterUsuarioId();
 	const { data, isPending, isError, error } = useQuery({
-		queryKey: ["higiene-sono", 1],
-		queryFn: () => listarRelatosHigieneSono(1),
+		queryKey: ["higiene-sono", usuarioId],
+		queryFn: () => listarRelatosHigieneSono(usuarioId),
 	});
 
 	const deleteMutation = useMutation({
-		mutationFn: (id: number) => deletarRelatoHigieneSono(1, id),
+		mutationFn: (id: number) => deletarRelatoHigieneSono(usuarioId, id),
 		onSuccess: async () => {
-			await queryClient.invalidateQueries({ queryKey: ["higiene-sono", 1] });
+			await queryClient.invalidateQueries({ queryKey: ["higiene-sono", usuarioId] });
 			toast.add({
 				title: "Registro excluído",
 				description: "O relato de sono foi removido.",

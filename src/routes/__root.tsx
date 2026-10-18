@@ -1,13 +1,40 @@
 // src/routes/__root.tsx
 
+import { useState } from "react";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { LogOut } from "lucide-react";
 import { ModeToggle } from "@/components/-/mode-toggle";
 import { StreakDialog } from "@/components/-/streak-dialog";
+import { LoginPage } from "@/components/auth/login-page";
 import { LembreteWatcher } from "@/components/lembrete-watcher";
+import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toast";
+import { encerrarSessao, obterUsuarioIdSalvo } from "@/lib/auth";
+import { queryClient } from "@/lib/react-query";
 
 export const Route = createRootRoute({
-	component: () => (
+	component: RootComponent,
+});
+
+function RootComponent() {
+	const [usuarioId, setUsuarioId] = useState(obterUsuarioIdSalvo);
+
+	function handleLogout() {
+		encerrarSessao();
+		queryClient.clear();
+		setUsuarioId(null);
+	}
+
+	if (usuarioId === null) {
+		return (
+			<>
+				<LoginPage onLogin={setUsuarioId} />
+				<Toaster />
+			</>
+		);
+	}
+
+	return (
 		<div className="flex flex-col h-screen overflow-hidden">
 			<div className="flex gap-8 justify-between p-2 border-b items-center shrink-0">
 				<nav className="flex gap-4 item-center">
@@ -40,11 +67,25 @@ export const Route = createRootRoute({
 						Método Socrático
 						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
 					</Link>
+					<Link
+						to="/sugestoes-saude-mental"
+						className="group flex flex-col relative p-0"
+					>
+						Sugestões de saúde mental
+						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
+					</Link>
+					<Link to="/usuario" className="group flex flex-col relative p-0">
+						Usuário
+						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
+					</Link>
 				</nav>
 
-				<div className="flex gap-2 items-center">
-					<StreakDialog />
+				<div className="flex items-center gap-2">
+					<StreakDialog usuarioId={usuarioId} />
 					<ModeToggle />
+					<Button variant="ghost" size="icon" aria-label="Sair" title="Sair" onClick={handleLogout}>
+						<LogOut aria-hidden="true" />
+					</Button>
 				</div>
 			</div>
 			<main className="flex flex-col flex-1 min-h-0 overflow-auto">
@@ -53,5 +94,5 @@ export const Route = createRootRoute({
 			<LembreteWatcher />
 			<Toaster />
 		</div>
-	),
-});
+	);
+}
