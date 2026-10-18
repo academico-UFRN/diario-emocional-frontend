@@ -2,6 +2,7 @@
 
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { ModeToggle } from "@/components/-/mode-toggle";
+import { StreakDialog } from "@/components/-/streak-dialog";
 import { LembreteWatcher } from "@/components/lembrete-watcher";
 import { Toaster } from "@/components/ui/toast";
 
@@ -41,9 +42,10 @@ export const Route = createRootRoute({
 					</Link>
 				</nav>
 
-				<div className="flex gap-2 items-center"></div>
-
-				<ModeToggle />
+				<div className="flex gap-2 items-center">
+					<StreakDialog />
+					<ModeToggle />
+				</div>
 			</div>
 			<main className="flex flex-col flex-1 min-h-0 overflow-auto">
 				<Outlet />

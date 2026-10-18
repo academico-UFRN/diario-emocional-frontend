@@ -39,6 +39,7 @@ export const TableAvaliation = () => {
 		mutationFn: deletarAvaliacaoSentimento,
 		onSuccess: () => {
 			useQueryClient.invalidateQueries({ queryKey: ["feelings"] });
+			useQueryClient.invalidateQueries({ queryKey: ["streak-period"] });
 		},
 	});
 
