@@ -41,6 +41,9 @@ export function ExcluirRelato({
       queryClient.invalidateQueries({
         queryKey: ["relatoDia"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["streak-period"],
+      });
     },
   });
 

@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { BuscarSolicitacaoSaudeMental } from "@/api/sugestao-saude-mental/sugestao-saude-mental.service";
-import type { SugestaoSaudeMental } from "@/api/sugestao-saude-mental/schema";
 import { Heading } from "@/components/-/typography";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";

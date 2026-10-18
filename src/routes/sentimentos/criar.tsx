@@ -32,6 +32,7 @@ function RouteComponent() {
 					...currentEvaluations,
 				],
 			);
+			useQueryClient.invalidateQueries({ queryKey: ["streak-period"] });
 			toast.add({
 				title: "Sucesso",
 				description: "Avaliação adicionada com sucesso.",

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
 import { ModeToggle } from "@/components/-/mode-toggle";
+import { StreakDialog } from "@/components/-/streak-dialog";
 import { LoginPage } from "@/components/auth/login-page";
 import { LembreteWatcher } from "@/components/lembrete-watcher";
 import { Button } from "@/components/ui/button";
@@ -80,6 +81,7 @@ function RootComponent() {
 				</nav>
 
 				<div className="flex items-center gap-2">
+					<StreakDialog usuarioId={usuarioId} />
 					<ModeToggle />
 					<Button variant="ghost" size="icon" aria-label="Sair" title="Sair" onClick={handleLogout}>
 						<LogOut aria-hidden="true" />

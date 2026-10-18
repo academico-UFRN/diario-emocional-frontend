@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createFileRoute,
   useNavigate,
@@ -32,6 +32,7 @@ function RouteComponent() {
   };
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const usuarioId = obterUsuarioId();
 
   const [mostrarSucesso, setMostrarSucesso] = useState(false);
@@ -40,6 +41,8 @@ function RouteComponent() {
     mutationFn: (dados: RelatoDiaCriarRequest) => CriarRelatoDia(dados, usuarioId),
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["relatoDia"] });
+      queryClient.invalidateQueries({ queryKey: ["streak-period"] });
       setMostrarSucesso(true);
     },
   });

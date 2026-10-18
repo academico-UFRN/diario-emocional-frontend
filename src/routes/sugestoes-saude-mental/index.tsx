@@ -17,7 +17,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { obterUsuarioId } from "@/lib/auth";
 
 export const Route = createFileRoute("/sugestoes-saude-mental/")({
