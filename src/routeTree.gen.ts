@@ -18,6 +18,8 @@ import { Route as CronogramaObrigatorioCriarRouteImport } from './routes/cronogr
 import { Route as HigieneSonoIndexRouteImport } from './routes/higieneSono/index'
 import { Route as HigieneSonoCriarRouteImport } from './routes/higieneSono/criar'
 import { Route as RelatoDiaIndexRouteImport } from './routes/relatoDia/index'
+import { Route as RpdIndexRouteImport } from './routes/rpd/index'
+import { Route as RpdCriarRouteImport } from './routes/rpd/criar'
 import { Route as SentimentosIndexRouteImport } from './routes/sentimentos/index'
 import { Route as SentimentosCriarRouteImport } from './routes/sentimentos/criar'
 import { Route as SugestoesSaudeMentalIndexRouteImport } from './routes/sugestoes-saude-mental/index'
@@ -28,6 +30,7 @@ import { Route as HigieneSonoIdEditarRouteImport } from './routes/higieneSono/$i
 import { Route as RelatoDiaCriarDataRegistroRouteImport } from './routes/relatoDia/criar/$dataRegistro'
 import { Route as RelatoDiaEditarDataRegistroRouteImport } from './routes/relatoDia/editar/$dataRegistro'
 import { Route as RelatoDiaIndividualDataRegistroRouteImport } from './routes/relatoDia/individual/$dataRegistro'
+import { Route as RpdIdEditarRouteImport } from './routes/rpd/$id.editar'
 import { Route as SentimentosDataRegistroEditarRouteImport } from './routes/sentimentos/$dataRegistro.editar'
 
 const IndexRoute = IndexRouteImport.update({
@@ -75,6 +78,16 @@ const HigieneSonoCriarRoute = HigieneSonoCriarRouteImport.update({
 const RelatoDiaIndexRoute = RelatoDiaIndexRouteImport.update({
   id: '/relatoDia/',
   path: '/relatoDia/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RpdIndexRoute = RpdIndexRouteImport.update({
+  id: '/rpd/',
+  path: '/rpd/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RpdCriarRoute = RpdCriarRouteImport.update({
+  id: '/rpd/criar',
+  path: '/rpd/criar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SentimentosIndexRoute = SentimentosIndexRouteImport.update({
@@ -133,6 +146,11 @@ const RelatoDiaIndividualDataRegistroRoute =
     path: '/relatoDia/individual/$dataRegistro',
     getParentRoute: () => rootRouteImport,
   } as any)
+const RpdIdEditarRoute = RpdIdEditarRouteImport.update({
+  id: '/rpd/$id/editar',
+  path: '/rpd/$id/editar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SentimentosDataRegistroEditarRoute =
   SentimentosDataRegistroEditarRouteImport.update({
     id: '/sentimentos/$dataRegistro/editar',
@@ -146,12 +164,14 @@ export interface FileRoutesByFullPath {
   '/chat/novo': typeof ChatNovoRoute
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/higieneSono/criar': typeof HigieneSonoCriarRoute
+  '/rpd/criar': typeof RpdCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
   '/sugestoes-saude-mental/$solicitacaoId': typeof SugestoesSaudeMentalSolicitacaoIdRoute
   '/chat/': typeof ChatIndexRoute
   '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/higieneSono/': typeof HigieneSonoIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
+  '/rpd/': typeof RpdIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
   '/sugestoes-saude-mental/': typeof SugestoesSaudeMentalIndexRoute
   '/usuario/': typeof UsuarioIndexRoute
@@ -160,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
+  '/rpd/$id/editar': typeof RpdIdEditarRoute
   '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRoutesByTo {
@@ -168,12 +189,14 @@ export interface FileRoutesByTo {
   '/chat/novo': typeof ChatNovoRoute
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/higieneSono/criar': typeof HigieneSonoCriarRoute
+  '/rpd/criar': typeof RpdCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
   '/sugestoes-saude-mental/$solicitacaoId': typeof SugestoesSaudeMentalSolicitacaoIdRoute
   '/chat': typeof ChatIndexRoute
   '/cronograma-obrigatorio': typeof CronogramaObrigatorioIndexRoute
   '/higieneSono': typeof HigieneSonoIndexRoute
   '/relatoDia': typeof RelatoDiaIndexRoute
+  '/rpd': typeof RpdIndexRoute
   '/sentimentos': typeof SentimentosIndexRoute
   '/sugestoes-saude-mental': typeof SugestoesSaudeMentalIndexRoute
   '/usuario': typeof UsuarioIndexRoute
@@ -182,6 +205,7 @@ export interface FileRoutesByTo {
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
+  '/rpd/$id/editar': typeof RpdIdEditarRoute
   '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRoutesById {
@@ -191,12 +215,14 @@ export interface FileRoutesById {
   '/chat/novo': typeof ChatNovoRoute
   '/cronograma-obrigatorio/criar': typeof CronogramaObrigatorioCriarRoute
   '/higieneSono/criar': typeof HigieneSonoCriarRoute
+  '/rpd/criar': typeof RpdCriarRoute
   '/sentimentos/criar': typeof SentimentosCriarRoute
   '/sugestoes-saude-mental/$solicitacaoId': typeof SugestoesSaudeMentalSolicitacaoIdRoute
   '/chat/': typeof ChatIndexRoute
   '/cronograma-obrigatorio/': typeof CronogramaObrigatorioIndexRoute
   '/higieneSono/': typeof HigieneSonoIndexRoute
   '/relatoDia/': typeof RelatoDiaIndexRoute
+  '/rpd/': typeof RpdIndexRoute
   '/sentimentos/': typeof SentimentosIndexRoute
   '/sugestoes-saude-mental/': typeof SugestoesSaudeMentalIndexRoute
   '/usuario/': typeof UsuarioIndexRoute
@@ -205,6 +231,7 @@ export interface FileRoutesById {
   '/relatoDia/criar/$dataRegistro': typeof RelatoDiaCriarDataRegistroRoute
   '/relatoDia/editar/$dataRegistro': typeof RelatoDiaEditarDataRegistroRoute
   '/relatoDia/individual/$dataRegistro': typeof RelatoDiaIndividualDataRegistroRoute
+  '/rpd/$id/editar': typeof RpdIdEditarRoute
   '/sentimentos/$dataRegistro/editar': typeof SentimentosDataRegistroEditarRoute
 }
 export interface FileRouteTypes {
@@ -215,12 +242,14 @@ export interface FileRouteTypes {
     | '/chat/novo'
     | '/cronograma-obrigatorio/criar'
     | '/higieneSono/criar'
+    | '/rpd/criar'
     | '/sentimentos/criar'
     | '/sugestoes-saude-mental/$solicitacaoId'
     | '/chat/'
     | '/cronograma-obrigatorio/'
     | '/higieneSono/'
     | '/relatoDia/'
+    | '/rpd/'
     | '/sentimentos/'
     | '/sugestoes-saude-mental/'
     | '/usuario/'
@@ -229,6 +258,7 @@ export interface FileRouteTypes {
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
+    | '/rpd/$id/editar'
     | '/sentimentos/$dataRegistro/editar'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -237,12 +267,14 @@ export interface FileRouteTypes {
     | '/chat/novo'
     | '/cronograma-obrigatorio/criar'
     | '/higieneSono/criar'
+    | '/rpd/criar'
     | '/sentimentos/criar'
     | '/sugestoes-saude-mental/$solicitacaoId'
     | '/chat'
     | '/cronograma-obrigatorio'
     | '/higieneSono'
     | '/relatoDia'
+    | '/rpd'
     | '/sentimentos'
     | '/sugestoes-saude-mental'
     | '/usuario'
@@ -251,6 +283,7 @@ export interface FileRouteTypes {
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
+    | '/rpd/$id/editar'
     | '/sentimentos/$dataRegistro/editar'
   id:
     | '__root__'
@@ -259,12 +292,14 @@ export interface FileRouteTypes {
     | '/chat/novo'
     | '/cronograma-obrigatorio/criar'
     | '/higieneSono/criar'
+    | '/rpd/criar'
     | '/sentimentos/criar'
     | '/sugestoes-saude-mental/$solicitacaoId'
     | '/chat/'
     | '/cronograma-obrigatorio/'
     | '/higieneSono/'
     | '/relatoDia/'
+    | '/rpd/'
     | '/sentimentos/'
     | '/sugestoes-saude-mental/'
     | '/usuario/'
@@ -273,6 +308,7 @@ export interface FileRouteTypes {
     | '/relatoDia/criar/$dataRegistro'
     | '/relatoDia/editar/$dataRegistro'
     | '/relatoDia/individual/$dataRegistro'
+    | '/rpd/$id/editar'
     | '/sentimentos/$dataRegistro/editar'
   fileRoutesById: FileRoutesById
 }
@@ -282,12 +318,14 @@ export interface RootRouteChildren {
   ChatNovoRoute: typeof ChatNovoRoute
   CronogramaObrigatorioCriarRoute: typeof CronogramaObrigatorioCriarRoute
   HigieneSonoCriarRoute: typeof HigieneSonoCriarRoute
+  RpdCriarRoute: typeof RpdCriarRoute
   SentimentosCriarRoute: typeof SentimentosCriarRoute
   SugestoesSaudeMentalSolicitacaoIdRoute: typeof SugestoesSaudeMentalSolicitacaoIdRoute
   ChatIndexRoute: typeof ChatIndexRoute
   CronogramaObrigatorioIndexRoute: typeof CronogramaObrigatorioIndexRoute
   HigieneSonoIndexRoute: typeof HigieneSonoIndexRoute
   RelatoDiaIndexRoute: typeof RelatoDiaIndexRoute
+  RpdIndexRoute: typeof RpdIndexRoute
   SentimentosIndexRoute: typeof SentimentosIndexRoute
   SugestoesSaudeMentalIndexRoute: typeof SugestoesSaudeMentalIndexRoute
   UsuarioIndexRoute: typeof UsuarioIndexRoute
@@ -296,6 +334,7 @@ export interface RootRouteChildren {
   RelatoDiaCriarDataRegistroRoute: typeof RelatoDiaCriarDataRegistroRoute
   RelatoDiaEditarDataRegistroRoute: typeof RelatoDiaEditarDataRegistroRoute
   RelatoDiaIndividualDataRegistroRoute: typeof RelatoDiaIndividualDataRegistroRoute
+  RpdIdEditarRoute: typeof RpdIdEditarRoute
   SentimentosDataRegistroEditarRoute: typeof SentimentosDataRegistroEditarRoute
 }
 
@@ -362,6 +401,20 @@ declare module '@tanstack/react-router' {
       path: '/relatoDia'
       fullPath: '/relatoDia/'
       preLoaderRoute: typeof RelatoDiaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rpd/': {
+      id: '/rpd/'
+      path: '/rpd'
+      fullPath: '/rpd/'
+      preLoaderRoute: typeof RpdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rpd/criar': {
+      id: '/rpd/criar'
+      path: '/rpd/criar'
+      fullPath: '/rpd/criar'
+      preLoaderRoute: typeof RpdCriarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sentimentos/': {
@@ -434,6 +487,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelatoDiaIndividualDataRegistroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rpd/$id/editar': {
+      id: '/rpd/$id/editar'
+      path: '/rpd/$id/editar'
+      fullPath: '/rpd/$id/editar'
+      preLoaderRoute: typeof RpdIdEditarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sentimentos/$dataRegistro/editar': {
       id: '/sentimentos/$dataRegistro/editar'
       path: '/sentimentos/$dataRegistro/editar'
@@ -450,6 +510,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatNovoRoute: ChatNovoRoute,
   CronogramaObrigatorioCriarRoute: CronogramaObrigatorioCriarRoute,
   HigieneSonoCriarRoute: HigieneSonoCriarRoute,
+  RpdCriarRoute: RpdCriarRoute,
   SentimentosCriarRoute: SentimentosCriarRoute,
   SugestoesSaudeMentalSolicitacaoIdRoute:
     SugestoesSaudeMentalSolicitacaoIdRoute,
@@ -457,6 +518,7 @@ const rootRouteChildren: RootRouteChildren = {
   CronogramaObrigatorioIndexRoute: CronogramaObrigatorioIndexRoute,
   HigieneSonoIndexRoute: HigieneSonoIndexRoute,
   RelatoDiaIndexRoute: RelatoDiaIndexRoute,
+  RpdIndexRoute: RpdIndexRoute,
   SentimentosIndexRoute: SentimentosIndexRoute,
   SugestoesSaudeMentalIndexRoute: SugestoesSaudeMentalIndexRoute,
   UsuarioIndexRoute: UsuarioIndexRoute,
@@ -465,6 +527,7 @@ const rootRouteChildren: RootRouteChildren = {
   RelatoDiaCriarDataRegistroRoute: RelatoDiaCriarDataRegistroRoute,
   RelatoDiaEditarDataRegistroRoute: RelatoDiaEditarDataRegistroRoute,
   RelatoDiaIndividualDataRegistroRoute: RelatoDiaIndividualDataRegistroRoute,
+  RpdIdEditarRoute: RpdIdEditarRoute,
   SentimentosDataRegistroEditarRoute: SentimentosDataRegistroEditarRoute,
 }
 export const routeTree = rootRouteImport
