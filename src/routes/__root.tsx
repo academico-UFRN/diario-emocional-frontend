@@ -1,8 +1,8 @@
 // src/routes/__root.tsx
 
-import { useState } from "react";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { LogOut } from "lucide-react";
+import { useState } from "react";
 import { ModeToggle } from "@/components/-/mode-toggle";
 import { StreakDialog } from "@/components/-/streak-dialog";
 import { LoginPage } from "@/components/auth/login-page";
@@ -52,6 +52,10 @@ function RootComponent() {
 						Higiene do sono
 						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
 					</Link>
+					<Link to="/rpd" className="group flex flex-col relative p-0">
+						Registro de pensamentos
+						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
+					</Link>
 					<Link to="/sentimentos" className="group flex flex-col relative p-0">
 						Avaliação de sentimentos
 						<div className="group-[&.active]:bg-blue-500 h-1 w-0 group-[&.active]:w-full transition-all duration-300 absolute -bottom-3.5"></div>
@@ -83,7 +87,13 @@ function RootComponent() {
 				<div className="flex items-center gap-2">
 					<StreakDialog usuarioId={usuarioId} />
 					<ModeToggle />
-					<Button variant="ghost" size="icon" aria-label="Sair" title="Sair" onClick={handleLogout}>
+					<Button
+						variant="ghost"
+						size="icon"
+						aria-label="Sair"
+						title="Sair"
+						onClick={handleLogout}
+					>
 						<LogOut aria-hidden="true" />
 					</Button>
 				</div>
